@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8"/>
+    <title>Notifications</title>
+</head>
+
+<body class="index-page">
+
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+
+<main class="main" style="margin-top: 100px;">
+
+    <section id="notifications" class="schedule section">
+
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Thông báo</h2>
+            <p>Quản lý lời mời & cập nhật đặt phòng của bạn</p>
+
+            <div class="d-flex flex-wrap align-items-center justify-content-center gap-2 mt-3">
+                <span class="btn btn-sm btn-primary disabled">
+                    <i class="bi bi-bell me-1"></i>
+                    Chưa đọc: <span th:text="${unreadCount}">0</span>
+                </span>
+
+                <a class="btn btn-sm btn-outline-secondary" href="/users/notifications">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Làm mới
+                </a>
+            </div>
+        </div>
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div th:if="${msg}" class="alert alert-success d-flex align-items-center" role="alert">
+                <i class="bi bi-check-circle me-2"></i>
+                <div th:text="${msg}"></div>
+            </div>
+
+            <div th:if="${err}" class="alert alert-danger d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                <div th:text="${err}"></div>
+            </div>
+
+            <div th:if="${inboxByDay == null or #maps.isEmpty(inboxByDay)}" class="text-center py-5">
+                <i class="bi bi-bell-slash fs-1"></i>
+                <h4 class="mt-3">Chưa có thông báo</h4>
+                <p class="text-muted mb-0">Khi có lời mời hoặc cập nhật đặt phòng, bạn sẽ thấy ở đây.</p>
+            </div>
+
+            <div th:if="${inboxByDay != null and !#maps.isEmpty(inboxByDay)}">
+
+                <ul class="nav nav-pills justify-content-center gap-2 mb-4" role="tablist">
+                    <li class="nav-item" role="presentation"
+                        th:each="e, s : ${inboxByDay.entrySet()}">
+
+                        <button class="nav-link day-tab"
+                                th:classappend="${s.index == 0} ? ' active' : ''"
+                                th:id="${'day-tab-' + s.index}"
+                                data-bs-toggle="tab"
+                                th:data-bs-target="${'#day-pane-' + s.index}"
+                                type="button"
+                                role="tab"
+                                th:aria-controls="${'day-pane-' + s.index}"
+                                th:aria-selected="${s.index == 0}">
+
+                            <div class="fw-bold" th:text="${#temporals.format(e.key,'dd/MM/yyyy')}">
+                                16/01/2026
+                            </div>
+                            <div class="small opacity-75"
+                                 th:text="${#lists.size(e.value) + ' thông báo'}">1 thông báo</div>
+
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="tab-pane fade"
+                         th:each="e, s : ${inboxByDay.entrySet()}"
+                         th:id="${'day-pane-' + s.index}"
+                         th:classappend="${s.index == 0} ? ' show active' : ''"
+                         role="tabpanel"
+                         th:aria-labelledby="${'day-tab-' + s.index}">
+
+                        <div class="schedule-content">
+                            <div class="session-timeline notification-timeline">
+
+                                <div th:each="nr : ${e.value}"
+                                     th:with="
+                                        bId=${nr.notification.bookingId},
+                                        st=${bId != null ? statusMap[bId.toString()] : null}
+                                     ">
+
+                                    <div class="session-block">
+
+                                        <!-- Time column -->
+                                        <div class="session-time">
+                                            <span class="start"
+                                                  th:text="${#temporals.format(nr.notification.createdAt,'HH:mm')}">09:00</span>
+                                            <span class="end text-muted"
+                                                  th:text="${#temporals.format(nr.notification.createdAt,'dd/MM')}">16/01</span>
+                                        </div>
+
+                                        <div class="session-card notification-card">
+
+                                            <div class="session-info">
+
+                                                <div class="session-meta">
+                                                    <span class="track development"
+                                                          th:text="${nr.notification.type}">INVITE</span>
+
+                                                    <span class="room text-muted ms-2">
+                                                        <i class="bi bi-clock me-1"></i>
+                                                        <span th:text="${#temporals.format(nr.notification.createdAt,'dd/MM/yyyy HH:mm')}">
+                                                            16/01/2026 09:00
+                                                        </span>
+                                                    </span>
+
+                                                    <span th:if="${nr.isRead == false}" class="badge bg-danger ms-2">NEW</span>
+                                                </div>
+
+                                                <h3 class="session-title mb-2">Bạn có một thông báo</h3>
+                                                <p class="session-description mb-0"
+                                                   th:text="${nr.notification.content}">
+                                                    Nội dung thông báo...
+                                                </p>
+
+                                                <div class="mt-2" th:if="${nr.notification.type == 'INVITE'}">
+                                                    <span th:if="${#strings.equalsIgnoreCase(st,'ACCEPTED')}" class="badge bg-success">
+                                                        <i class="bi bi-check-circle me-1"></i> Đã tham gia
+                                                    </span>
+
+                                                    <span th:if="${#strings.equalsIgnoreCase(st,'DECLINED')}" class="badge bg-secondary">
+                                                        <i class="bi bi-x-circle me-1"></i> Đã từ chối
+                                                    </span>
+                                                </div>
+
+                                                <div class="d-flex flex-wrap gap-2 mt-3">
+
+                                                    <form th:if="${nr.isRead == false}"
+                                                          th:action="@{/users/notifications/{id}/read(id=${nr.id.notiId})}"
+                                                          method="post" class="m-0">
+                                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                                            <i class="bi bi-check2-circle me-1"></i> Đánh dấu đã đọc
+                                                        </button>
+                                                    </form>
+
+                                                    <th:block th:if="${nr.notification.type == 'INVITE'
+                                                        and bId != null
+                                                        and (st == null or #strings.equalsIgnoreCase(st,'INVITED'))}">
+
+                                                        <form th:action="@{/users/notifications/{id}/accept(id=${nr.id.notiId})}"
+                                                              method="post" class="m-0">
+                                                            <button type="submit" class="btn btn-sm btn-success">
+                                                                <i class="bi bi-hand-thumbs-up me-1"></i> Đồng ý
+                                                            </button>
+                                                        </form>
+
+                                                        <form th:action="@{/users/notifications/{id}/decline(id=${nr.id.notiId})}"
+                                                              method="post" class="m-0">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                                <i class="bi bi-hand-thumbs-down me-1"></i> Từ chối
+                                                            </button>
+                                                        </form>
+
+                                                    </th:block>
+
+                                                    <span th:if="${nr.notification.type != 'INVITE'}"
+                                                          class="badge bg-light text-dark align-self-center">
+                                                        <i class="bi bi-info-circle me-1"></i> Thông báo
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                            <button class="add-to-schedule" type="button" title="Thông báo">
+                                                <i class="bi bi-bell"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+</a>
+<div id="preloader"></div>
+
+<!-- Vendor JS -->
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+<style>
+    .notification-timeline { margin-top: 12px; }
+    .day-tab { min-width: 160px; border-radius: 14px; padding: 12px 16px; }
+    .day-tab.active { box-shadow: 0 10px 22px rgba(0,0,0,.08); }
+
+    .notification-card .session-title { font-size: 18px; line-height: 1.2; }
+    .notification-card .session-description { color: rgba(0,0,0,.7); }
+
+    .session-time .start { font-weight: 700; }
+    .session-time .end { font-size: 12px; }
+</style>
+
+</body>
+</html>

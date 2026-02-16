@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin-head :: admin-head}">
+    <meta charset="UTF-8">
+    <title>OnMeet - Trang chủ</title>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div th:replace="~{layouts/admin-navbar :: admin-navbar}"></div>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Bảng điều khiển</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Bảng điều khiển</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Cột trái -->
+            <div class="col-lg-8">
+                <div class="row">
+
+                    <!-- Lịch họp hôm nay -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Lịch họp hôm nay</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-calendar-check"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 th:text="${stats.meetingsToday}">0</h6>
+
+                                        <!-- delta (+/-) -->
+                                        <span class="small fw-bold"
+                                              th:text="${stats.deltaVsYesterday >= 0 ? '+' + stats.deltaVsYesterday : stats.deltaVsYesterday}"
+                                              th:classappend="${stats.deltaVsYesterday >= 0 ? ' text-success' : ' text-danger'}">
+                      +0
+                    </span>
+                                        <span class="text-muted small">so với hôm qua</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cuộc họp trong tháng -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Cuộc họp tháng này</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-calendar3"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 th:text="${stats.meetingsThisMonth}">0</h6>
+
+                                        <span class="small fw-bold"
+                                              th:text="${#numbers.formatDecimal(stats.growthPct, 1, 2)} + '%'"
+                                              th:classappend="${stats.growthPct >= 0 ? ' text-success' : ' text-danger'}">
+                      0%
+                    </span>
+                                        <span class="text-muted small">tăng trưởng</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Người tham gia -->
+                    <div class="col-xxl-4 col-xl-12">
+                        <div class="card info-card customers-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Người tham gia</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 th:text="${stats.activeParticipants}">0</h6>
+                                        <span class="text-success small fw-bold">Hoạt động</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Báo cáo -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Thống kê lịch họp <span>| Hôm nay</span></h5>
+
+                                <!-- Nếu template bạn dùng ApexCharts (NiceAdmin) -->
+                                <div id="reportsChart"></div>
+
+                                <!-- Dữ liệu chart đưa qua JS bằng th:inline -->
+                                <script th:inline="javascript">
+                                    /*<![CDATA[*/
+                                    const chartLabels = /*[[${stats.chartLabels}]]*/ [];
+                                    const chartValues = /*[[${stats.chartValues}]]*/ [];
+                                    /*]]>*/
+                                </script>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lịch họp gần đây -->
+                    <div class="col-12">
+                        <div class="card recent-sales overflow-auto">
+                            <div class="card-body">
+                                <h5 class="card-title">Lịch họp gần đây</h5>
+
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Chủ trì</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Thời gian</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:if="${stats.recentMeetings == null || #lists.isEmpty(stats.recentMeetings)}">
+                                        <td colspan="5" class="text-center text-muted py-4">Chưa có lịch họp.</td>
+                                    </tr>
+
+                                    <tr th:each="m : ${stats.recentMeetings}">
+                                        <th th:text="'#M' + ${m.bookingId}">#M0</th>
+                                        <td th:text="${m.hostName}">N/A</td>
+                                        <td th:text="${m.title}">N/A</td>
+                                        <td th:text="${#temporals.format(m.startTime, 'dd/MM/yyyy HH:mm')}">--</td>
+                                        <td>
+                      <span class="badge"
+                            th:text="${m.uiStatus == 'DONE' ? 'Hoàn thành' : (m.uiStatus == 'ONGOING' ? 'Đang diễn ra' : 'Sắp tới')}"
+                            th:classappend="${m.uiStatus == 'DONE' ? ' bg-success' : (m.uiStatus == 'ONGOING' ? ' bg-warning text-dark' : ' bg-primary')}">
+                        Trạng thái
+                      </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phòng họp phổ biến -->
+                    <div class="col-12">
+                        <div class="card top-selling overflow-auto">
+                            <div class="card-body pb-0">
+                                <h5 class="card-title">Phòng họp được sử dụng nhiều</h5>
+
+                                <table class="table table-borderless">
+                                    <thead>
+                                    <tr>
+                                        <th>Phòng</th>
+                                        <th>Sức chứa</th>
+                                        <th>Số lần đặt</th>
+                                        <th>Tình trạng</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr th:if="${stats.topRooms == null || #lists.isEmpty(stats.topRooms)}">
+                                        <td colspan="4" class="text-center text-muted py-4">Chưa có dữ liệu.</td>
+                                    </tr>
+
+                                    <tr th:each="r : ${stats.topRooms}">
+                                        <td th:text="${r.roomName}">Phòng</td>
+                                        <td th:text="${r.capacity} + ' người'">0 người</td>
+                                        <td th:text="${r.totalBookings}">0</td>
+                                        <td><span class="badge bg-success">Hoạt động</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Cột phải -->
+            <div class="col-lg-4">
+
+                <!-- Hoạt động gần đây (tạm để static, sau muốn thì mình map theo log/notification) -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Hoạt động gần đây</h5>
+                        <div class="activity">
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">10 phút</div>
+                                <i class="bi bi-circle-fill activity-badge text-success"></i>
+                                <div class="activity-content">
+                                    Tạo lịch họp <b>Dự án OnMeet</b>
+                                </div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">1 giờ</div>
+                                <i class="bi bi-circle-fill activity-badge text-warning"></i>
+                                <div class="activity-content">
+                                    Cập nhật phòng họp B203
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thông báo (tạm static) -->
+                <div class="card">
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Thông báo hệ thống</h5>
+                        <div class="news">
+                            <div class="post-item clearfix">
+                                <h4><a href="#">Cập nhật hệ thống</a></h4>
+                                <p>Hệ thống sẽ bảo trì lúc 23:00 hôm nay.</p>
+                            </div>
+                            <div class="post-item clearfix">
+                                <h4><a href="#">Tính năng mới</a></h4>
+                                <p>Đã bổ sung nhắc lịch qua email.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{layouts/admin-footer :: admin-footer}"></div>
+
+<!-- ApexCharts render (nếu template NiceAdmin có sẵn ApexCharts) -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (typeof ApexCharts === "undefined") return;
+
+        new ApexCharts(document.querySelector("#reportsChart"), {
+            series: [{
+                name: 'Số cuộc họp',
+                data: (typeof chartValues !== "undefined") ? chartValues : []
+            }],
+            chart: {
+                height: 350,
+                type: 'area',
+                toolbar: { show: false }
+            },
+            xaxis: {
+                categories: (typeof chartLabels !== "undefined") ? chartLabels : []
+            },
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth' }
+        }).render();
+    });
+</script>
+
+</body>
+</html>

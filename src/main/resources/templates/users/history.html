@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title>Meeting History</title>
+</head>
+
+<body class="index-page">
+
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<main class="main" style="margin-top: 100px;">
+
+    <div class="page-title">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="heading-title">Lịch sử cuộc họp</h1>
+                        <p class="mb-0">
+                            Theo dõi và quản lý toàn bộ lịch sử cuộc họp của bạn.
+                            Xem chi tiết, hóa đơn và gửi phản hồi về các buổi học của bạn tại đây.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a th:href="@{/users/home}">Trang chủ</a></li>
+                    <li class="current">Lịch sử cuộc họp</li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <section id="speaker-details-2" class="speaker-details-2 section">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="fw-bold">Success!</span> <span th:text="${successMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="fw-bold">Error!</span> <span th:text="${errorMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mb-5">
+                <div class="speaker-sessions" data-aos="fade-up" data-aos-delay="200">
+                    <div class="container">
+                        <h3 class="sessions-title mb-4 border-bottom pb-2">Cuộc họp của tôi</h3>
+
+                        <div th:if="${#lists.isEmpty(hostedBookings)}" class="alert alert-secondary text-center">
+                            Bạn chưa tạo cuộc họp nào.
+                        </div>
+
+                        <div class="sessions-list">
+                            <div class="session-card" th:each="b : ${hostedBookings}" data-aos="fade-up" data-aos-delay="100">
+                                <div class="session-content">
+                                    <div class="session-type"
+                                         style="border: 1px solid; display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.75rem;"
+                                         th:classappend="
+                                            ${b.status == 'CANCELLED'} ? 'text-danger border-danger' :
+                                            (${b.status == 'CONFIRMED'} ? 'text-success border-success' :
+                                            (${b.status == 'PENDING'} ? 'text-warning border-warning' : 'text-secondary border-secondary'))"
+                                                                             th:text="
+                                            ${b.status == 'CANCELLED'} ? 'Đã huỷ' :
+                                            (${b.status == 'CONFIRMED'} ? 'Đã hoàn thành' :
+                                            (${b.status == 'PENDING'} ? 'Đang chờ xác nhận' : b.status))">
+                                    </div>
+
+
+                                    <h4 class="session-title mt-2" th:text="${b.title}">Chủ đề cuộc họp</h4>
+                                    <p class="session-description" th:text="${b.description != null ? b.description : 'No description provided.'}">Mô tả</p>
+
+                                    <div class="session-meta">
+                                        <div class="session-info">
+                                            <div class="session-detail">
+                                                <span class="fw-bold">Ngày tổ chức: </span>
+                                                <span th:text="${#temporals.format(b.startTime, 'dd/MM/yyyy')}">15/12/2025</span>
+                                            </div>
+<!--                                            <div class="session-detail">-->
+<!--                                                <span class="fw-bold">Thời gian: </span>-->
+<!--                                                <span th:text="${#temporals.format(b.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(b.endTime, 'HH:mm')}">09:00 - 11:30</span>-->
+<!--                                            </div>-->
+                                            <div class="session-detail">
+                                                <span class="fw-bold">Địa chỉ: </span>
+                                                <span th:text="${b.room != null ? b.room.address : 'Phòng không xác định'}">Tên phòng</span>                                            </div>
+                                            </div>
+                                            </div>
+                                    <div class="mt-4 p-4 bg-light rounded-4 shadow-sm border">
+                                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                                            <div>
+                                                <h6 class="text-uppercase fw-bold text-secondary mb-1">
+                                                    <i class="bi bi-cash-coin me-1"></i> Chi phí dự kiến
+                                                </h6>
+
+                                                <div class="small text-muted" th:if="${b.room != null and b.room.pricePerHour != null}">
+                                                    Đơn giá:
+                                                    <span class="fw-semibold text-dark"
+                                                          th:text="${#numbers.formatDecimal(b.room.pricePerHour, 0, 'COMMA', 0, 'POINT')} + ' VNĐ / giờ'">
+                                                    </span>
+                                                </div>
+
+                                                <div class="small text-muted">
+                                                    Thời gian:
+                                                    <span class="fw-semibold text-dark"
+                                                          th:text="${#temporals.format(b.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(b.endTime, 'HH:mm')}">
+                                                     </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-end">
+                                                <div class="small text-uppercase text-muted fw-bold">Tổng cộng</div>
+                                                <div class="fs-3 fw-bold text-success">
+                                                    <span th:if="${b.totalPrice != null}"
+                                                          th:text="${#numbers.formatDecimal(b.totalPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                                                    </span>
+                                                    <span th:unless="${b.totalPrice != null}">0 VNĐ</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex gap-2 mt-4 justify-content-end">
+                                        <form th:if="${b.status == 'Booked' or b.status == 'PENDING'}"
+                                              th:action="@{/users/history/cancel/{id}(id=${b.id})}"
+                                              method="post"
+                                              style="display: inline;"
+                                              onsubmit="return confirm('Bạn có chắc muốn huỷ cuộc họp này không?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Huỷ</button>
+                                        </form>
+
+                                        <a th:if="${b.status == 'CONFIRMED'}"
+                                           th:href="@{/users/history/detail/{id}(id=${b.id})}"
+                                           class="btn btn-sm btn-primary">Chi tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="speaker-sessions" data-aos="fade-up" data-aos-delay="300">
+                    <div class="container">
+                        <h3 class="sessions-title mb-4 border-bottom pb-2">Cuộc họp được mời</h3>
+
+                        <div th:if="${#lists.isEmpty(invitedBookings)}" class="alert alert-secondary text-center">
+                            Không tìm thấy cuộc họp được mời.
+                        </div>
+
+                        <div class="sessions-list">
+                            <div class="session-card" th:each="b : ${invitedBookings}" data-aos="fade-up" data-aos-delay="100">
+                                <div class="session-content">
+                                    <div class="session-type"
+                                         style="border: 1px solid; display: inline-block; padding: 2px 10px; border-radius: 4px; font-weight: bold; font-size: 0.8rem;"
+                                         th:classappend="${b.status == 'Cancelled'} ? 'text-danger border-danger' : 'text-success border-success'"
+                                         th:text="${b.status}">
+                                        Status
+                                    </div>
+
+                                    <h4 class="session-title mt-2" th:text="${b.title}">Chủ đề cuộc họp</h4>
+                                    <p class="session-description"
+                                       th:text="'Người mời: ' + ${b.host != null ? b.host.fullname : 'Ẩn danh'}">
+                                        Thông tin người mời
+                                    </p>
+
+                                    <div class="session-meta">
+                                        <div class="session-info">
+                                            <div class="session-detail">
+                                                <span class="fw-bold">Ngày tổ chức: </span>
+                                                <span th:text="${#temporals.format(b.startTime, 'dd/MM/yyyy')}">Ngày tổ chức</span>
+                                            </div>
+                                            <div class="session-detail">
+                                                <span class="fw-bold">Thời gian: </span>
+                                                <span th:text="${#temporals.format(b.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(b.endTime, 'HH:mm')}">Thời gian</span>
+                                            </div>
+                                            <div class="session-detail">
+                                                <span class="fw-bold">Địa chỉ: </span>
+                                                <span th:text="${b.room != null ? b.room.address : 'Phòng không xác định'}">Tên phòng</span>                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <a th:if="${b.status == 'CONFIRMED'}"
+                                               th:href="@{/users/history/detail/{id}(id=${b.id})}"
+                                               class="btn btn-sm btn-outline-primary">Chi tiết</a>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

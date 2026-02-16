@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title th:text="${room.name}">Chi tiết phòng họp</title>
+</head>
+
+<body class="index-page">
+
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<main class="main" style="margin-top: 100px;">
+    <div class="page-title">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="heading-title">CHI TIẾT PHÒNG HỌP</h1>
+                        <p class="mb-0">Xem thông tin chi tiết, trang thiết bị và lịch trình trống của phòng họp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a th:href="@{/home}">Trang chủ</a></li>
+                    <li><a th:href="@{/users/meeting-rooms}">Danh sách phòng</a></li>
+                    <li class="current" th:text="${room.name}">Tên phòng</li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <section id="room-detail" class="venue-2 section">
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-5">
+                <div class="col-lg-7">
+                    <div class="venue-card" data-aos="fade-right" data-aos-delay="100">
+                        <div class="venue-image">
+                            <img th:src="${room.imageUrl != null} ? @{'/user-photos/' + ${room.imageUrl}} : @{/assets/img/rooms/default-room.jpg}"
+                                 alt="Meeting Room Detail" class="img-fluid rounded-4 mb-4" style="min-height: 400px; width: 100%; object-fit: cover;">
+
+                            <div class="venue-badge" th:classappend="${room.status == 'ACTIVE' ? 'bg-success' : 'bg-danger'}">
+                                <i class="bi" th:classappend="${room.status == 'ACTIVE' ? 'bi-check-circle-fill' : 'bi-x-circle-fill'}"></i>
+                                <span th:text="${room.status == 'ACTIVE' ? 'Phòng sẵn sàng' : 'Phòng bảo trì'}">Trạng thái</span>
+                            </div>
+                        </div>
+
+                        <div class="venue-content">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 th:text="${room.name}">Tên phòng họp</h3>
+                                <span class="badge bg-success fs-6">
+                                    <i class="bi bi-cash-stack me-1"></i>
+                                    <span th:text="${room.pricePerHour != null ? #numbers.formatDecimal(room.pricePerHour, 0, 'COMMA', 0, 'POINT') + ' VNĐ/giờ' : 'Liên hệ'}"></span>
+                                </span>
+                            </div>
+
+                            <div class="venue-address text-muted mb-3">
+                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                                <span th:text="${room.address != null ? room.address : 'Đang cập nhật địa chỉ...'}">Địa chỉ phòng</span>
+                            </div>
+
+                            <p class="venue-description" th:text="${room.features}">
+                                Mô tả tính năng phòng họp.
+                            </p>
+
+                            <h5 class="mt-4 mb-3">Thông số & Thiết bị:</h5>
+                            <div class="venue-features row g-3">
+                                <div class="col-6 feature-item d-flex align-items-center">
+                                    <i class="bi bi-people fs-4 text-primary me-3"></i>
+                                    <div>
+                                        <span class="d-block fw-bold">Sức chứa</span>
+                                        <span class="text-muted small" th:text="${room.capacity + ' người'}">50 người</span>
+                                    </div>
+                                </div>
+
+                                <div th:each="asset : ${room.roomAssets}" class="col-6 feature-item d-flex align-items-center">
+                                    <i class="bi bi-cpu fs-4 text-primary me-3"></i>
+                                    <div>
+                                        <span class="d-block fw-bold" th:text="${asset.device.name}">Tên thiết bị</span>
+                                        <span class="text-muted small" th:text="${'Số lượng: ' + asset.quantity}">1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="directions-section h-100" data-aos="fade-left" data-aos-delay="200">
+                        <div class="card shadow border-0 rounded-4">
+                            <div class="card-header bg-primary text-white p-4 rounded-top-4">
+                                <h4 class="mb-0 text-white"><i class="bi bi-calendar-check me-2"></i>Đặt phòng ngay</h4>
+                            </div>
+                            <div class="card-body p-4">
+                                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                                <form th:action="@{/bookings/create}" method="post">
+                                    <input type="hidden" name="roomId" th:value="${room.id}">
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Ngày sử dụng</label>
+                                        <input type="date" class="form-control" name="bookingDate" required>
+                                    </div>
+
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold">Giờ bắt đầu</label>
+                                            <input type="time" class="form-control" name="startTimeStr" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold">Giờ kết thúc</label>
+                                            <input type="time" class="form-control" name="endTimeStr" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Chủ đề cuộc họp</label>
+                                        <input type="text" class="form-control" placeholder="VD: Họp báo cáo quý..." name="title" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Mô tả cuộc họp</label>
+                                        <textarea class="form-control" name="description" rows="3"
+                                                  placeholder="Nhập nội dung ngắn gọn hoặc ghi chú cho thành viên..."></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Mời thành viên tham dự</label>
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text"><i class="bi bi-person-plus"></i></span>
+                                            <input type="text" id="userSearch" class="form-control" placeholder="Nhập tên, email để tìm...">
+                                        </div>
+
+                                        <div id="searchResult" class="list-group shadow-sm position-absolute w-100" style="z-index: 1000; display: none; max-height: 200px; overflow-y: auto;"></div>
+
+                                        <div id="selectedAttendees" class="d-flex flex-wrap gap-2 mt-2">
+                                        </div>
+
+                                        <input type="hidden" name="attendeeUserIds" id="attendeeUserIds">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">Yêu cầu thêm</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="teaBreak" name="teaBreak">
+                                            <label class="form-check-label" for="teaBreak">Chuẩn bị Tea-break</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="support" name="technicalSupport">
+                                            <label class="form-check-label" for="support">Hỗ trợ kỹ thuật IT</label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mb-4 p-3 bg-light rounded-3 border-start border-success border-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="fw-bold">Đơn giá:</span>
+                                            <span class="text-success fw-bold"
+                                                  th:text="${room.pricePerHour != null ? #numbers.formatDecimal(room.pricePerHour, 0, 'COMMA', 0, 'POINT') + ' VNĐ/giờ' : 'Liên hệ'}">
+                                            </span>
+                                        </div>
+
+                                        <div id="totalPriceSection" class="d-flex justify-content-between align-items-center pt-2 border-top" style="display: none !important;">
+                                            <span class="fw-bold">Tổng dự tính (<span id="durationText">0</span> giờ):</span>
+                                            <span id="totalPriceText" class="text-danger fw-bold fs-5">0 VNĐ</span>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="rawPrice" th:value="${room.pricePerHour}">
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-primary btn-lg py-3" th:disabled="${room.status != 'ACTIVE'}">
+                                            <span th:text="${room.status == 'ACTIVE' ? 'Xác nhận đặt phòng' : 'Phòng đang bảo trì'}">Xác nhận</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer bg-light p-3 text-center small text-muted rounded-bottom-4">
+                                *Vui lòng hủy trước 30 phút nếu thay đổi kế hoạch.
+                            </div>
+                        </div>
+
+                        <div class="travel-options mt-4 p-4 bg-light rounded-4">
+                            <h4>Quy định phòng</h4>
+                            <div class="travel-item mb-3 d-flex">
+                                <div class="travel-icon text-warning me-3"><i class="bi bi-trash"></i></div>
+                                <div class="travel-info">
+                                    <h5>Vệ sinh</h5>
+                                    <p class="mb-0 small">Dọn dẹp rác và ghế ngồi sau khi họp.</p>
+                                </div>
+                            </div>
+                            <div class="travel-item d-flex">
+                                <div class="travel-icon text-danger me-3"><i class="bi bi-power"></i></div>
+                                <div class="travel-info">
+                                    <h5>Thiết bị</h5>
+                                    <p class="mb-0 small">Tắt máy chiếu và đèn khi rời phòng.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
+
+<script>
+    let selectedUsers = [];
+
+    const userSearch = document.getElementById('userSearch');
+    const searchResult = document.getElementById('searchResult');
+    const selectedAttendeesContainer = document.getElementById('selectedAttendees');
+    const attendeeIdsInput = document.getElementById('attendeeUserIds');
+
+    userSearch.addEventListener('input', function() {
+        const query = this.value.trim();
+        if (query.length < 2) {
+            searchResult.style.display = 'none';
+            return;
+        }
+
+        fetch(`/users/api/users/search?q=${encodeURIComponent(query)}`)
+            .then(res => res.json())
+            .then(data => {
+                searchResult.innerHTML = '';
+                if (data.length > 0) {
+                    data.forEach(user => {
+                        const item = document.createElement('a');
+                        item.className = 'list-group-item list-group-item-action small';
+                        item.innerHTML = `<strong>${user.fullname}</strong> - ${user.email}`;
+                        item.href = 'javascript:void(0)';
+                        item.onclick = () => addUser(user);
+                        searchResult.appendChild(item);
+                    });
+                    searchResult.style.display = 'block';
+                } else {
+                    searchResult.style.display = 'none';
+                }
+            });
+    });
+
+    function addUser(user) {
+        if (!selectedUsers.find(u => u.userId === user.userId)) {
+            selectedUsers.push(user);
+            renderAttendees();
+        }
+        userSearch.value = '';
+        searchResult.style.display = 'none';
+    }
+
+    function removeUser(userId) {
+        selectedUsers = selectedUsers.filter(u => u.userId !== userId);
+        renderAttendees();
+    }
+
+    function renderAttendees() {
+        selectedAttendeesContainer.innerHTML = '';
+        const ids = [];
+        selectedUsers.forEach(user => {
+            ids.push(user.userId);
+            const badge = document.createElement('span');
+            badge.className = 'badge bg-light text-dark border p-2 d-flex align-items-center';
+            badge.innerHTML = `${user.fullname} <i class="bi bi-x-circle ms-2 text-danger" style="cursor:pointer" onclick="removeUser(${user.userId})"></i>`;
+            selectedAttendeesContainer.appendChild(badge);
+        });
+        attendeeIdsInput.value = ids.join(',');
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!userSearch.contains(e.target)) {
+            searchResult.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const startTimeInput = document.querySelector('input[name="startTimeStr"]');
+        const endTimeInput = document.querySelector('input[name="endTimeStr"]');
+        const rawPrice = parseFloat(document.getElementById('rawPrice').value) || 0;
+        const totalPriceSection = document.getElementById('totalPriceSection');
+        const totalPriceText = document.getElementById('totalPriceText');
+        const durationText = document.getElementById('durationText');
+
+        function calculateTotal() {
+            const start = startTimeInput.value;
+            const end = endTimeInput.value;
+
+            if (start && end && rawPrice > 0) {
+                const [startH, startM] = start.split(':').map(Number);
+                const [endH, endM] = end.split(':').map(Number);
+
+                const startTotalMinutes = startH * 60 + startM;
+                const endTotalMinutes = endH * 60 + endM;
+
+                let diffMinutes = endTotalMinutes - startTotalMinutes;
+
+                if (diffMinutes > 0) {
+                    const hours = diffMinutes / 60;
+                    const total = hours * rawPrice;
+
+                    totalPriceSection.style.setProperty('display', 'flex', 'important');
+
+                    totalPriceText.innerText = new Intl.NumberFormat('vi-VN').format(Math.round(total)) + ' VNĐ';
+                    durationText.innerText = hours.toFixed(1);
+                } else {
+                    totalPriceSection.style.setProperty('display', 'none', 'important');
+                }
+            }
+        }
+        startTimeInput.addEventListener('change', calculateTotal);
+        endTimeInput.addEventListener('change', calculateTotal);
+    });
+</script>
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

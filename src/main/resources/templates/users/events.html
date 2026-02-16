@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+<body class="index-page">
+
+<!-- Navbar start -->
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<!-- Navbar End -->
+
+<main class="main" style="margin-top: 100px;">
+
+    <div class="page-title">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="heading-title">Sự kiện Nổi bật</h1>
+                        <p class="mb-0">
+                            Khám phá các hội thảo, diễn đàn và khóa đào tạo chuyên sâu.
+                            Kết nối với chuyên gia và mở rộng mạng lưới quan hệ của bạn.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a th:href="@{/home}">Trang chủ</a></li>
+                    <li class="current">Sự kiện</li>
+                </ol>
+            </div>
+        </nav>
+    </div><section id="event-hero" class="call-to-action section light-background">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <span class="badge bg-primary mb-2">Sự kiện sắp tới</span>
+                <h2>Vietnam Tech Summit 2025</h2>
+                <p class="lead">Diễn đàn công nghệ lớn nhất năm: Xu hướng Chuyển đổi số & Quản trị Doanh nghiệp thông minh.</p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5" data-aos="zoom-in" data-aos-delay="200">
+            <div class="col-lg-10">
+                <div class="cta-card">
+                    <div class="row align-items-center g-4">
+
+                        <div class="col-lg-6">
+                            <div class="cta-content">
+                                <div class="stats-grid mb-4">
+                                    <div class="stat-item">
+                                        <span class="stat-number" data-purecounter-start="0" data-purecounter-end="500" data-purecounter-duration="2">500+</span>
+                                        <span class="stat-label">Người tham dự</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" data-purecounter-start="0" data-purecounter-end="20" data-purecounter-duration="2">20</span>
+                                        <span class="stat-label">Diễn giả</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" data-purecounter-start="0" data-purecounter-end="2" data-purecounter-duration="2">02</span>
+                                        <span class="stat-label">Ngày</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="2">12</span>
+                                        <span class="stat-label">Chuyên đề</span>
+                                    </div>
+                                </div>
+
+                                <h3>Đừng bỏ lỡ cơ hội kết nối</h3>
+                                <p>Vé Early Bird sẽ đóng sau <strong>3 ngày</strong> nữa. Đăng ký ngay để nhận ưu đãi giảm 40% và bộ quà tặng độc quyền từ ban tổ chức.</p>
+
+                                <div class="cta-buttons">
+                                    <a href="#registration-form" class="btn btn-primary">Đăng Ký Ngay</a>
+                                    <a href="#" class="btn btn-outline">Xem Lịch Trình</a>
+                                </div>
+
+                                <div class="trust-indicators mt-4">
+                                    <div class="trust-item">
+                                        <i class="bi bi-people"></i>
+                                        <span>Networking 1:1</span>
+                                    </div>
+                                    <div class="trust-item">
+                                        <i class="bi bi-award"></i>
+                                        <span>Chứng nhận tham gia</span>
+                                    </div>
+                                    <div class="trust-item">
+                                        <i class="bi bi-gift"></i>
+                                        <span>Teabreak miễn phí</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="cta-visual">
+                                <div class="image-stack">
+                                    <img th:src="@{/assets/img/events/showcase-8.webp}" alt="Event Image" class="main-image img-fluid" loading="lazy">
+
+                                    <div class="floating-card card-1" data-aos="fade-up" data-aos-delay="300">
+                                        <div class="card-content">
+                                            <i class="bi bi-ticket-perforated-fill"></i>
+                                            <div>
+                                                <span class="card-number">Còn 50</span>
+                                                <span class="card-text">Vé ưu đãi</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="floating-card card-2" data-aos="fade-up" data-aos-delay="400">
+                                        <div class="card-content">
+                                            <i class="bi bi-mic-fill"></i>
+                                            <div>
+                                                <span class="card-number">TOP 10</span>
+                                                <span class="card-text">CEO Công nghệ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5" data-aos="fade-up" data-aos-delay="300">
+            <div class="col-lg-8">
+                <div class="urgency-bar">
+                    <div class="urgency-content">
+                        <i class="bi bi-alarm-fill"></i>
+                        <span class="urgency-text">Thời gian đến khi khai mạc sự kiện:</span>
+                        <div class="countdown d-flex" data-count="2025/12/30">
+                            <div>
+                                <span class="count-days">00</span>
+                                <small>Ngày</small>
+                            </div>
+                            <div>
+                                <span class="count-hours">00</span>
+                                <small>Giờ</small>
+                            </div>
+                            <div>
+                                <span class="count-minutes">00</span>
+                                <small>Phút</small>
+                            </div>
+                            <div>
+                                <span class="count-seconds">00</span>
+                                <small>Giây</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="registration-form" class="section">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header text-center mb-5">
+                <h2>Đăng Ký Tham Dự</h2>
+                <p>Vui lòng điền thông tin để giữ chỗ. Chúng tôi sẽ gửi vé điện tử qua email của bạn.</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <form th:action="@{/events/register}" method="post">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="fullName" class="form-label">Họ và tên</label>
+                                        <input type="text" class="form-control" id="fullName" name="fullName" required placeholder="Nguyễn Văn A">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email công ty</label>
+                                        <input type="email" class="form-control" id="email" name="email" required placeholder="name@company.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="position" class="form-label">Chức vụ</label>
+                                        <input type="text" class="form-control" id="position" name="position">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Loại vé tham dự</label>
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <div class="form-check border rounded p-3">
+                                                    <input class="form-check-input" type="radio" name="ticketType" id="standard" value="standard" checked>
+                                                    <label class="form-check-label" for="standard">
+                                                        <strong>Tiêu chuẩn</strong><br>
+                                                        <span class="text-muted small">Miễn phí</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-check border rounded p-3 bg-light">
+                                                    <input class="form-check-input" type="radio" name="ticketType" id="vip" value="vip">
+                                                    <label class="form-check-label" for="vip">
+                                                        <strong>VIP Pass</strong><br>
+                                                        <span class="text-primary small">500.000đ</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-4 text-center">
+                                        <button type="submit" class="btn btn-primary btn-lg w-50">Xác nhận đăng ký</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/admin-head :: admin-head}">
+    <meta charset="UTF-8">
+    <title>OnMeet - Admin Home</title>
+</head>
+
+<body>
+
+<div th:replace="~{layouts/admin-navbar :: admin-navbar}"></div>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Trung tâm điều hành</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Tổng quan</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section dashboard">
+
+        <div class="row">
+
+            <div class="col-xxl-3 col-md-6">
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Phòng họp <span>| Tổng số</span></h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary">
+                                <i class="bi bi-door-open"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 th:text="${totalRooms}">0</h6>
+                                <span class="text-muted small pt-2 ps-1">phòng</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-3 col-md-6">
+                <div class="card info-card revenue-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thiết bị <span>| Trong kho</span></h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success">
+                                <i class="bi bi-hdd-stack"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 th:text="${totalDevices}">0</h6>
+                                <span class="text-muted small pt-2 ps-1">thiết bị</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-3 col-md-6">
+                <div class="card info-card customers-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Người dùng <span>| Tổng số</span></h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 th:text="${totalUsers}">0</h6>
+                                <span class="text-muted small pt-2 ps-1">người</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-3 col-md-6">
+                <div class="card info-card sales-card"> <div class="card-body">
+                    <h5 class="card-title">Lịch họp <span>| Sắp tới (Active)</span></h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6 th:text="${activeBookings}">0</h6>
+                            <span class="text-muted small pt-2 ps-1">cuộc họp</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-8">
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body pt-3">
+                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                                    <div>
+                                        <h5 class="card-title mb-0">Thao tác nhanh</h5>
+                                        <div class="text-muted small">Đi tắt sang các chức năng thường dùng.</div>
+                                    </div>
+
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a class="btn btn-primary" th:href="@{/admin/bookings/create}">
+                                            <i class="bi bi-plus-circle me-1"></i> Tạo lịch họp
+                                        </a>
+                                        <a class="btn btn-outline-secondary" th:href="@{/admin/bookings}">
+                                            <i class="bi bi-calendar-event me-1"></i> Quản lý lịch họp
+                                        </a>
+                                        <a class="btn btn-outline-secondary" th:href="@{/admin/devices}">
+                                            <i class="bi bi-hdd-stack me-1"></i> Thiết bị
+                                        </a>
+                                        <a class="btn btn-outline-secondary" th:href="@{/admin/meeting-rooms}">
+                                            <i class="bi bi-door-open me-1"></i> Phòng họp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body pt-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">Việc cần xử lý</h5>
+                                    <a class="small" th:href="@{/admin/bookings}">Xem tất cả</a>
+                                </div>
+
+                                <div class="list-group list-group-flush mt-2">
+                                    <a th:each="pb : ${pendingBookings}"
+                                       th:href="@{/admin/bookings}"
+                                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                        <div class="me-3">
+                                            <div class="fw-semibold" th:text="${pb.title}">Tiêu đề cuộc họp</div>
+                                            <div class="text-muted small">
+                                                <span th:text="${roomNames[pb.roomId]}">Phòng</span> •
+                                                <span th:text="${#temporals.format(pb.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(pb.endTime, 'HH:mm')}">00:00</span> •
+                                                Host: <span th:text="${hostNames[pb.hostUserId]}">Tên chủ trì</span>
+                                            </div>
+                                        </div>
+                                        <span class="badge bg-warning text-dark rounded-pill">PENDING</span>
+                                    </a>
+
+                                    <div th:if="${#lists.isEmpty(pendingBookings)}" class="text-center py-3 text-muted small">
+                                        <i class="bi bi-check-circle text-success me-1"></i> Không có lịch họp nào chờ duyệt.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <h5 class="card-title mb-2">Cảnh báo hệ thống</h5>
+                        <div class="alert alert-warning d-flex align-items-start gap-2" role="alert">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <div>
+                                <div class="fw-semibold">Phòng B203 đang bảo trì</div>
+                                <div class="small text-muted">Không thể đặt trong khung giờ 18:00 - 22:00.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <h5 class="card-title mb-2">Đi tắt</h5>
+                        <div class="d-grid gap-2">
+                            <a class="btn btn-outline-primary" th:href="@{/admin/users}">
+                                <i class="bi bi-people me-1"></i> Danh sách người dùng
+                            </a>
+                            <a class="btn btn-outline-primary" th:href="@{/admin/devices/available}">
+                                <i class="bi bi-check2-circle me-1"></i> Thiết bị có sẵn
+                            </a>
+                            <a class="btn btn-outline-primary" th:href="@{/admin/bookings}">
+                                <i class="bi bi-calendar2-week me-1"></i> Danh sách lịch họp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{layouts/admin-footer :: admin-footer}"></div>
+
+</body>
+</html>

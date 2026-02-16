@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+<body class="index-page">
+
+<!-- Navbar start -->
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<!-- Navbar End -->
+
+<main class="main" style="margin-top: 100px">
+
+    <div class="page-title">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="heading-title">Chính sách bảo mật</h1>
+                        <p class="mb-0">
+                            Cam kết của chúng tôi về việc bảo vệ thông tin nội bộ, dữ liệu lịch trình và các nội dung cuộc họp quan trọng của doanh nghiệp bạn.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a th:href="@{/home}">Trang chủ</a></li>
+                    <li class="current">Chính sách bảo mật</li>
+                </ol>
+            </div>
+        </nav>
+    </div><section id="privacy" class="privacy section">
+
+    <div class="container" data-aos="fade-up">
+        <div class="privacy-header" data-aos="fade-up">
+            <div class="header-content">
+                <div class="last-updated">Cập nhật lần cuối: 17/12/2025</div>
+                <h1>Chính sách Dữ liệu & Quyền riêng tư</h1>
+                <p class="intro-text">Tài liệu này mô tả cách hệ thống thu thập, xử lý và bảo vệ thông tin đặt phòng cũng như dữ liệu cá nhân của nhân viên trong tổ chức.</p>
+            </div>
+        </div>
+
+        <div class="privacy-content" data-aos="fade-up">
+            <div class="content-section">
+                <h2>1. Giới thiệu chung</h2>
+                <p>Khi sử dụng hệ thống quản lý lịch họp này, bạn đang tin tưởng giao phó thông tin lịch trình công việc cho chúng tôi. Chúng tôi hiểu rằng nội dung các cuộc họp (Chiến lược, Nhân sự, Tài chính...) là tài sản bí mật của công ty.</p>
+                <p>Chính sách này nhằm giúp bạn hiểu rõ những dữ liệu nào được thu thập để vận hành hệ thống đặt phòng và cách chúng tôi bảo vệ chúng khỏi sự truy cập trái phép từ bên trong lẫn bên ngoài.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>2. Dữ liệu chúng tôi thu thập</h2>
+                <p>Để đảm bảo việc phân bổ phòng họp chính xác và tránh xung đột lịch trình, hệ thống thu thập các loại dữ liệu sau:</p>
+
+                <h3>2.1 Thông tin do người dùng cung cấp</h3>
+                <p>Khi bạn tạo yêu cầu đặt phòng (Booking), hệ thống sẽ ghi nhận:</p>
+                <ul>
+                    <li><strong>Thông tin định danh:</strong> Tên nhân viên, Mã nhân viên, Phòng ban, Email nội bộ.</li>
+                    <li><strong>Chi tiết cuộc họp:</strong> Tiêu đề cuộc họp, Nội dung mô tả (Agenda), Danh sách người tham dự (Attendees).</li>
+                    <li><strong>Tài nguyên yêu cầu:</strong> Các thiết bị cần sử dụng (Projector, Bảng trắng, Video Conference...).</li>
+                </ul>
+
+                <h3>2.2 Dữ liệu thu thập tự động</h3>
+                <p>Để tối ưu hóa hiệu suất hệ thống và bảo mật:</p>
+                <ul>
+                    <li>Lịch sử đăng nhập và thao tác (Log activities).</li>
+                    <li>Thời gian Check-in/Check-out thực tế tại phòng họp (thông qua QR Code hoặc cảm biến).</li>
+                    <li>Địa chỉ IP và thiết bị sử dụng để truy cập hệ thống.</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>3. Mục đích sử dụng thông tin</h2>
+                <p>Dữ liệu thu thập được sử dụng duy nhất cho mục đích quản trị vận hành doanh nghiệp:</p>
+                <ul>
+                    <li><strong>Xử lý đặt phòng:</strong> Đảm bảo phòng họp được giữ chỗ đúng người, đúng giờ.</li>
+                    <li><strong>Thông báo & Nhắc nhở:</strong> Gửi email/thông báo nhắc lịch họp cho người tham dự.</li>
+                    <li><strong>Báo cáo hiệu suất:</strong> Phân tích tần suất sử dụng phòng để Ban Quản Trị tối ưu hóa không gian văn phòng.</li>
+                    <li><strong>Giải quyết tranh chấp:</strong> Dùng làm bằng chứng lịch sử nếu có xung đột về lịch đặt phòng giữa các bộ phận.</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>4. Chia sẻ và Hiển thị thông tin</h2>
+                <p>Chúng tôi áp dụng các quy tắc nghiêm ngặt về việc ai có thể nhìn thấy lịch họp của bạn:</p>
+
+                <h3>4.1 Chế độ Công khai (Public)</h3>
+                <p>Với các cuộc họp thông thường, các thông tin cơ bản (Người đặt, Giờ họp, Phòng họp) sẽ hiển thị trên lịch chung để mọi người biết phòng đã kín.</p>
+
+                <h3>4.2 Chế độ Riêng tư (Private Mode)</h3>
+                <p>Đối với các cuộc họp nhạy cảm (VD: Phỏng vấn, Họp lương thưởng), bạn có thể chọn chế độ "Riêng tư". Khi đó:</p>
+                <ul>
+                    <li>Tiêu đề cuộc họp sẽ bị ẩn trên lịch chung (hiển thị là "Busy" hoặc "Private Booking").</li>
+                    <li>Nội dung chi tiết chỉ hiển thị với người chủ trì và người được mời.</li>
+                    <li>Admin hệ thống chỉ có quyền xem thời gian sử dụng, không xem được nội dung chi tiết.</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>5. Bảo mật dữ liệu</h2>
+                <p>Chúng tôi thực hiện các biện pháp kỹ thuật để bảo vệ dữ liệu nội bộ:</p>
+                <ul>
+                    <li>Mã hóa dữ liệu truyền tải (SSL/TLS).</li>
+                    <li>Phân quyền truy cập theo vai trò (Role-based Access Control) - Nhân viên không thể xem/sửa lịch của bộ phận khác nếu không được cấp quyền.</li>
+                    <li>Sao lưu dữ liệu định kỳ để phòng tránh mất mát thông tin.</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>6. Quyền của người dùng</h2>
+                <p>Là nhân viên sử dụng hệ thống, bạn có các quyền sau:</p>
+                <ul>
+                    <li>Truy cập và xem lại lịch sử đặt phòng của cá nhân.</li>
+                    <li>Chỉnh sửa hoặc hủy bỏ lịch họp do chính mình tạo ra.</li>
+                    <li>Yêu cầu IT Admin trích xuất dữ liệu họp của bộ phận mình (cần phê duyệt của Trưởng bộ phận).</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>7. Cập nhật chính sách</h2>
+                <p>Chính sách này có thể được cập nhật theo quy định mới của công ty hoặc yêu cầu bảo mật thông tin. Mọi thay đổi sẽ được thông báo qua email nội bộ trước khi áp dụng.</p>
+            </div>
+        </div>
+
+        <div class="privacy-contact" data-aos="fade-up">
+            <h2>Liên hệ bộ phận Bảo mật</h2>
+            <p>Nếu bạn có thắc mắc về việc lộ lọt thông tin cuộc họp hoặc cần báo cáo lỗ hổng bảo mật, vui lòng liên hệ:</p>
+            <div class="contact-details">
+                <p><strong>Bộ phận:</strong> IT Security & Compliance</p>
+                <p><strong>Email:</strong> security@company-domain.com</p>
+                <p><strong>Hotline:</strong> Ext. 1002 (Giờ hành chính)</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

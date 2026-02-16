@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isEdit} ? 'Sửa lịch họp | Admin' : 'Đặt phòng họp | Admin'">Đặt phòng họp | Admin</title>
+    <div th:replace="~{layouts/admin-head :: admin-head}"></div>
+
+    <style>
+        .device-row { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .device-row:last-child { border-bottom: 0; }
+        .device-qty { max-width: 110px; }
+        /* Đảm bảo kết quả tìm kiếm nổi lên trên các thành phần khác */
+        .search-results-container { position: relative; }
+        .list-group.position-absolute { z-index: 1050; max-height: 250px; overflow-y: auto; }
+        .attendee-tag { font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{layouts/admin-navbar :: admin-navbar}"></div>
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${isEdit} ? 'Cập nhật thông tin cuộc họp' : 'Thông tin cuộc họp'">Thông tin cuộc họp</h5>
+
+                        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                        <form th:action="${isEdit} ? @{/admin/bookings/{id}/edit(id=${bookingId})} : @{/admin/bookings/save}"
+                              th:object="${bookingRequest}"
+                              method="post">
+
+                            <div class="mb-3">
+                                <label class="form-label">Chủ đề cuộc họp <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" th:field="*{title}" required placeholder="Ex: Weekly Team Meeting">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Phòng họp <span class="text-danger">*</span></label>
+                                    <select class="form-select" th:field="*{roomId}" required>
+                                        <option value="">-- Chọn phòng họp --</option>
+                                        <option th:each="r : ${rooms}" th:value="${r.id}" th:text="${r.name + ' (Sức chứa: ' + r.capacity + ')'}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3 search-results-container">
+                                    <label class="form-label">Host (Người chủ trì) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" id="hostSearchInput" class="form-control" placeholder="Email hoặc SĐT...">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="searchUser('host')"><i class="bi bi-search"></i></button>
+                                    </div>
+                                    <div id="selectedHost" class="mt-2 p-2 border rounded bg-light" style="display:none;">
+                                        <span id="hostNameDisplay" class="fw-bold text-primary"></span>
+                                        <button type="button" class="btn-close float-end small" onclick="clearSelected('host')"></button>
+                                    </div>
+                                    <input type="hidden" th:field="*{hostUserId}" id="hostUserId" required>
+                                    <div id="hostSearchResults" class="list-group position-absolute w-100 shadow" style="display:none;"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4 search-results-container">
+                                <label class="form-label">Mời người tham gia</label>
+                                <div class="input-group">
+                                    <input type="text" id="attendeeSearchInput" class="form-control" placeholder="Nhập Email hoặc SĐT để mời...">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="searchUser('attendee')">Thêm</button>
+                                </div>
+                                <div id="selectedAttendees" class="mt-2 d-flex flex-wrap gap-2"></div>
+                                <div id="attendeeHiddenInputs"></div>
+                                <div id="attendeeSearchResults" class="list-group position-absolute w-100 shadow" style="display:none;"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Thời gian bắt đầu <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" class="form-control" th:field="*{startTime}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Thời gian kết thúc <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" class="form-control" th:field="*{endTime}" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Mô tả</label>
+                                <textarea class="form-control" th:field="*{description}" rows="3" placeholder="Ghi chú thêm..."></textarea>
+                            </div>
+
+                            <hr class="my-4">
+                            <h5 class="card-title mb-2">Thiết bị đi kèm</h5>
+                            <div class="border rounded p-3">
+                                <div th:if="${#lists.isEmpty(availableDevices)}" class="text-muted">Không có thiết bị khả dụng.</div>
+                                <div class="row" th:each="device, itemStat : ${availableDevices}">
+                                    <div class="col-12 device-row">
+                                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input device-check" type="checkbox" th:id="${'dev_' + device.id}" th:attr="data-index=${itemStat.index}">
+                                                <label class="form-check-label fw-bold" th:for="${'dev_' + device.id}" th:text="${device.name}"></label>
+                                                <span class="text-muted ms-2 small" th:text="${'(Còn: ' + device.quantity + ')'}"></span>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="hidden" th:name="|devices[${itemStat.index}].deviceId|" th:value="${device.id}" disabled/>
+                                                <input type="number" class="form-control form-control-sm device-qty" th:name="|devices[${itemStat.index}].quantity|" value="1" min="1" th:max="${device.quantity}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <a th:href="@{/admin/bookings}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Quay lại</a>
+                                <button type="submit" class="btn btn-primary" th:text="${isEdit} ? 'Cập nhật' : 'Lưu đặt phòng'">Lưu đặt phòng</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{layouts/admin-footer :: admin-footer}"></div>
+
+<script>
+    function searchUser(type) {
+        const input = document.getElementById(type + 'SearchInput');
+        const resultsDiv = document.getElementById(type + 'SearchResults');
+        const query = input.value;
+
+        if (query.length < 2) return;
+
+        // Cập nhật đúng đường dẫn API trong Controller của bạn
+        fetch(`/admin/bookings/api/users/search?q=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                resultsDiv.innerHTML = '';
+                if (data.length === 0) {
+                    resultsDiv.innerHTML = '<div class="list-group-item">Không tìm thấy người dùng</div>';
+                }
+                resultsDiv.style.display = 'block';
+                data.forEach(user => {
+                    const btn = document.createElement('button');
+                    btn.className = 'list-group-item list-group-item-action small';
+                    btn.type = 'button';
+                    btn.innerHTML = `<strong>${user.fullname}</strong> - ${user.email} <br><small class="text-muted">${user.phone || ''}</small>`;
+                    btn.onclick = () => selectUser(type, user);
+                    resultsDiv.appendChild(btn);
+                });
+            });
+    }
+
+    function selectUser(type, user) {
+        if (type === 'host') {
+            document.getElementById('hostUserId').value = user.userId;
+            document.getElementById('hostNameDisplay').innerText = user.fullname + " (" + user.email + ")";
+            document.getElementById('selectedHost').style.display = 'block';
+            document.getElementById('hostSearchResults').style.display = 'none';
+            document.getElementById('hostSearchInput').value = '';
+        } else {
+            if (document.querySelector(`.attendee-tag[data-id="${user.userId}"]`)) return;
+
+            const container = document.getElementById('selectedAttendees');
+            const hiddenContainer = document.getElementById('attendeeHiddenInputs');
+
+            const tag = document.createElement('span');
+            tag.className = 'badge bg-info p-2 attendee-tag d-flex align-items-center';
+            tag.dataset.id = user.userId;
+            tag.id = 'tag_' + user.userId;
+            tag.innerHTML = `${user.fullname} <i class="bi bi-x-circle ms-2" style="cursor:pointer" onclick="removeAttendee(${user.userId})"></i>`;
+            container.appendChild(tag);
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'attendeeUserIds';
+            input.value = user.userId;
+            input.id = 'hidden_attendee_' + user.userId;
+            hiddenContainer.appendChild(input);
+
+            document.getElementById('attendeeSearchResults').style.display = 'none';
+            document.getElementById('attendeeSearchInput').value = '';
+        }
+    }
+
+    function clearSelected(type) {
+        document.getElementById('hostUserId').value = '';
+        document.getElementById('selectedHost').style.display = 'none';
+    }
+
+    function removeAttendee(id) {
+        const tag = document.getElementById('tag_' + id);
+        const input = document.getElementById('hidden_attendee_' + id);
+        if(tag) tag.remove();
+        if(input) input.remove();
+    }
+
+    // Đóng kết quả tìm kiếm khi click ra ngoài
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-results-container')) {
+            document.querySelectorAll('.list-group').forEach(el => el.style.display = 'none');
+        }
+    });
+
+    // Logic thiết bị đi kèm (Giữ nguyên)
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".device-check").forEach(cb => {
+            cb.addEventListener("change", function () {
+                const idx = cb.dataset.index;
+                const qtyInput = document.querySelector(`input[name="devices[${idx}].quantity"]`);
+                const idInput  = document.querySelector(`input[name="devices[${idx}].deviceId"]`);
+                if (cb.checked) {
+                    qtyInput.disabled = false; idInput.disabled = false;
+                    if (qtyInput.value === "" || qtyInput.value === "0") qtyInput.value = 1;
+                } else {
+                    qtyInput.disabled = true; idInput.disabled = true;
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

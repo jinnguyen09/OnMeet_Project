@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/head :: head}">
+  <meta charset="UTF-8">
+  <title>Meeting Rooms</title>
+</head>
+
+<body class="index-page">
+
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+
+<main class="main" style="margin-top: 100px;">
+
+  <div class="page-title">
+    <div class="heading">
+      <div class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-lg-8">
+            <h1 class="heading-title">Danh sách phòng họp</h1>
+            <p class="mb-0">
+              Xem các phòng họp có sắn, kiểm tra sức chứa và tình trạng để đặt phòng phù hợp nhất.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="breadcrumbs">
+      <div class="container">
+        <ol>
+          <li><a th:href="@{/home}">Trang chủ</a></li>
+          <li class="current">Phòng họp</li>
+        </ol>
+      </div>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="container" data-aos="fade-up">
+      <div class="row gy-4">
+
+        <div class="col-lg-4 col-md-6" th:each="room : ${rooms}">
+          <div class="card h-100 shadow-sm border-0">
+            <a th:href="@{/users/rooms/{id}(id=${room.id})}">
+              <img th:src="${room.imageUrl != null} ? @{'/user-photos/' + ${room.imageUrl}} : @{/assets/img/rooms/default-room.jpg}"
+                   class="card-img-top"
+                   alt="Meeting Room Image"
+                   style="height: 200px; object-fit: cover;">
+            </a>
+
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <a th:href="@{/users/rooms/{id}(id=${room.id})}" class="text-decoration-none">
+                  <h5 class="card-title fw-bold text-primary mb-0" th:text="${room.name}">Room Name</h5>
+                </a>
+                <span class="badge"
+                      th:classappend="${room.status == 'ACTIVE'} ? 'bg-success' : 'bg-danger'"
+                      th:text="${room.status}">Status</span>
+              </div>
+
+              <p class="card-text mb-1 text-truncate">
+                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                <span th:text="${room.address != null ? room.address : 'Chưa cập nhật địa chỉ'}">Địa chỉ</span>
+              </p>
+
+              <p class="card-text mb-1">
+                <i class="bi bi-people-fill text-secondary me-2"></i>
+                <strong>Sức chứa:</strong> <span th:text="${room.capacity}">0</span> người
+              </p>
+
+              <p class="card-text mb-2 text-success fw-bold">
+                <i class="bi bi-cash-stack me-2"></i>
+                <span th:text="${room.pricePerHour != null ? #numbers.formatDecimal(room.pricePerHour, 0, 'COMMA', 0, 'POINT') + ' VNĐ/giờ' : 'Liên hệ'}">
+            0 VNĐ/giờ
+                </span>
+              </p>
+              <p class="card-text text-muted small" th:text="${room?.features != null ? room.features : 'Không có mô tả.'}">
+                Description
+              </p>
+            </div>
+
+            <div class="card-footer bg-white border-top-0 pb-4">
+              <div class="d-flex gap-2">
+                <a th:href="@{/users/rooms/{id}(id=${room.id})}" class="btn btn-outline-primary w-50">
+                  <i class="bi bi-eye"></i> Details
+                </a>
+
+                <a th:href="@{/users/rooms/{id}(id=${room.id})}"
+                   th:classappend="${room.status != 'ACTIVE'} ? 'disabled btn-secondary' : 'btn-primary'"
+                   class="btn w-50">
+                  <i class="bi bi-calendar-plus"></i>
+                  <span th:text="${room.status == 'ACTIVE'} ? 'Phòng hoạt động' : 'Phòng bảo trì'"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking API Test Interface</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; background-color: #f4f6f8; }
+        h1 { text-align: center; color: #333; }
+        .box { border: 1px solid #ddd; padding: 25px; margin-bottom: 25px; border-radius: 8px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { margin-top: 0; color: #0056b3; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        button { background: #28a745; color: white; border: none; padding: 12px 24px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 14px; transition: background 0.3s; }
+        button:hover { background: #218838; }
+        input, select { padding: 10px; margin: 8px 0; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .device-item { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .device-item:last-child { border-bottom: none; }
+        label { font-weight: 600; color: #555; margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+<h1>BOOKING SYSTEM TEST INTERFACE</h1>
+
+<div class="box">
+    <h2>1. Available Devices</h2>
+    <button onclick="loadDevices()">Load Device List</button>
+    <div id="deviceList" style="margin-top: 15px; color: #666;"></div>
+</div>
+
+<div class="box">
+    <h2>2. Create New Booking</h2>
+    <form id="bookingForm" onsubmit="return handleBooking(event)">
+        <label>Meeting Title:</label>
+        <input type="text" id="title" value="Weekly Team Meeting" required>
+
+        <label>Description:</label>
+        <input type="text" id="description" value="Discuss project milestones and KPIs">
+
+        <div style="display: flex; gap: 15px;">
+            <div style="flex:1">
+                <label>Room ID:</label>
+                <input type="number" id="roomId" value="1" required>
+            </div>
+            <div style="flex:1">
+                <label>Host User ID:</label>
+                <input type="number" id="hostUserId" value="1" required>
+            </div>
+        </div>
+
+        <label>Start Time:</label>
+        <input type="datetime-local" id="startTime" required>
+
+        <label>End Time:</label>
+        <input type="datetime-local" id="endTime" required>
+
+        <label style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 10px;">Attach Devices (Optional):</label>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="number" id="deviceId" placeholder="Device ID (e.g., 1)" style="flex: 2;">
+            <input type="number" id="deviceQty" placeholder="Qty" value="1" style="flex: 1;">
+        </div>
+        <br>
+
+        <button type="submit" style="width: 100%; background-color: #007bff;">Submit Booking Request</button>
+    </form>
+</div>
+
+<script>
+    const API_URL = "http://localhost:8080/api";
+
+    async function loadDevices() {
+        try {
+            let response = await fetch(`${API_URL}/devices/available`);
+            if (response.ok) {
+                let devices = await response.json();
+                let html = "";
+                if (devices.length === 0) {
+                    html = "<p>No available devices found.</p>";
+                } else {
+                    devices.forEach(d => {
+                        html += `<div class="device-item">
+                                    <span><b>[ID: ${d.id}]</b> ${d.name} (${d.type})</span>
+                                    <span style="color: green; font-weight: bold;">Available: ${d.quantity}</span>
+                                 </div>`;
+                    });
+                }
+                document.getElementById("deviceList").innerHTML = html;
+            } else {
+                alert("Error loading devices. Check console for details.");
+            }
+        } catch (e) {
+            alert("Server connection error: " + e);
+        }
+    }
+
+    async function handleBooking(event) {
+        event.preventDefault();
+
+        let data = {
+            title: document.getElementById("title").value,
+            description: document.getElementById("description").value,
+            roomId: parseInt(document.getElementById("roomId").value),
+            hostUserId: parseInt(document.getElementById("hostUserId").value),
+            startTime: document.getElementById("startTime").value,
+            endTime: document.getElementById("endTime").value,
+            devices: []
+        };
+
+        let devId = document.getElementById("deviceId").value;
+        if (devId) {
+            data.devices.push({
+                deviceId: parseInt(devId),
+                quantity: parseInt(document.getElementById("deviceQty").value)
+            });
+        }
+
+        try {
+            let response = await fetch(`${API_URL}/bookings`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                let result = await response.json();
+                alert("Booking Successful!\nBooking ID: " + result.id);
+                loadDevices();
+            } else {
+                let errorText = await response.text();
+                alert("Booking Failed: " + errorText);
+            }
+        } catch (e) {
+            alert("Connection error: " + e);
+        }
+    }
+</script>
+</body>
+</html>

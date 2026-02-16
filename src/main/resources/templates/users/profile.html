@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title>Hồ sơ cá nhân</title>
+</head>
+
+<body class="index-page">
+
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<main class="main" style="margin-top: 100px;">
+
+    <div class="page-title">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="heading-title">Hồ sơ cá nhân</h1>
+                        <p class="mb-0">Quản lý thông tin tài khoản, cập nhật hồ sơ và bảo mật của bạn.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a th:href="@{/home}">Trang chủ</a></li>
+                    <li class="current">Hồ sơ cá nhân</li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <section class="section profile">
+        <div class="container" data-aos="fade-up">
+
+            <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-1"></i>
+                <span th:text="${message}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="row">
+
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                            <img th:src="@{${user.avatarPath}}"
+                                 alt="Profile"
+                                 class="rounded-circle mb-3"
+                                 style="width: 120px; height: 120px; object-fit: cover;">
+
+                            <h2 class="mb-1" th:text="${user.fullname}">Tên người dùng</h2>
+                            <h3 class="text-muted" th:text="${user.jobTitle} ?: 'Thành viên'">Chức vụ</h3>
+
+                            <div class="social-links mt-2">
+                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Tổng quan</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Chỉnh sửa hồ sơ</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Đổi mật khẩu</button>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content pt-2">
+
+                                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                    <h5 class="card-title mt-3">Giới thiệu</h5>
+                                    <p class="small fst-italic" th:text="${user.about} ?: 'Chưa có thông tin giới thiệu.'">...</p>
+
+                                    <h5 class="card-title">Chi tiết hồ sơ</h5>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Họ và tên</div>
+                                        <div class="col-lg-9 col-md-8 fw-bold" th:text="${user.fullname}"></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Công ty</div>
+                                        <div class="col-lg-9 col-md-8" th:text="${user.company}"></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Nghề nghiệp</div>
+                                        <div class="col-lg-9 col-md-8" th:text="${user.jobTitle}"></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Quốc gia</div>
+                                        <div class="col-lg-9 col-md-8">Việt Nam</div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Địa chỉ</div>
+                                        <div class="col-lg-9 col-md-8" th:text="${user.address}"></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Số điện thoại</div>
+                                        <div class="col-lg-9 col-md-8" th:text="${user.phone}"></div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3 col-md-4 label text-muted">Email</div>
+                                        <div class="col-lg-9 col-md-8" th:text="${user.email}"></div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                    <form th:action="@{/profile/update}" method="post" enctype="multipart/form-data">
+
+                                        <div class="row mb-3">
+                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Ảnh đại diện</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <img th:src="@{${user.avatarPath}}"
+                                                     alt="Profile" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+                                                <div class="pt-2">
+                                                    <input class="form-control" type="file" id="profileImage" name="profileImage" accept="image/png, image/jpeg">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="fullName" type="text" class="form-control" id="fullName" th:value="${user.fullname}" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="about" class="col-md-4 col-lg-3 col-form-label">Giới thiệu</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <textarea name="about" class="form-control" id="about" style="height: 100px" th:text="${user.about}"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Công ty</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="company" type="text" class="form-control" id="company" th:value="${user.company}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="jobTitle" class="col-md-4 col-lg-3 col-form-label">Nghề nghiệp</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="jobTitle" type="text" class="form-control" id="jobTitle" th:value="${user.jobTitle}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="address" type="text" class="form-control" id="Address" th:value="${user.address}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="phone" type="text" class="form-control" id="Phone" th:value="${user.phone}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="email" type="email" class="form-control" id="Email" th:value="${user.email}" disabled>
+                                                <small class="text-muted fst-italic">*Không thể thay đổi email đăng nhập</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab-pane fade pt-3" id="profile-change-password">
+                                    <form th:action="@{/profile/change-password}" method="post">
+
+                                        <div class="row mb-3">
+                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="password" type="password" class="form-control" id="currentPassword" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="newpassword" type="password" class="form-control" id="newPassword" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu mới</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

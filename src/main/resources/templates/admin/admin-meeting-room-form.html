@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Phòng Họp</title>
+    <div th:replace="~{layouts/admin-head :: admin-head}"></div>
+</head>
+
+<body>
+
+<div th:replace="~{layouts/admin-navbar :: admin-navbar}"></div>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1 th:text="${meetingRoomForm.id != null ? 'Chỉnh Sửa Phòng Họp' : 'Tạo Phòng Họp Mới'}"></h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/meeting-rooms">Phòng Họp</a></li>
+                <li class="breadcrumb-item active" th:text="${meetingRoomForm.id != null ? 'Chỉnh Sửa' : 'Tạo Mới'}"></li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thông Tin Phòng Họp</h5>
+
+                        <form th:object="${meetingRoomForm}"
+                              th:action="${meetingRoomForm.id != null ? '/admin/meeting-rooms/' + meetingRoomForm.id : '/admin/meeting-rooms/create'}"
+                              method="POST" enctype="multipart/form-data" class="needs-validation">
+
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên Phòng Họp <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="capacity" class="form-label">Sức Chứa (Người) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-people"></i></span>
+                                        <input type="number" class="form-control" id="capacity" th:field="*{capacity}" min="1" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="priceDisplay" class="form-label">Giá Phòng (VNĐ/Giờ) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light fw-bold text-primary">₫</span>
+                                        <input type="text" class="form-control fw-bold text-primary" id="priceDisplay" placeholder="0" required oninput="formatCurrency(this)">
+                                        <input type="hidden" id="pricePerHour" th:field="*{pricePerHour}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Địa Chỉ <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                    <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="VD: Tầng 3, Tòa nhà A" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="features" class="form-label">Tính Năng</label>
+                                <textarea class="form-control" id="features" rows="3" th:field="*{features}" placeholder="VD: Máy chiếu, Bảng trắng..."></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Trạng Thái <span class="text-danger">*</span></label>
+                                <select class="form-select" id="status" th:field="*{status}" required>
+                                    <option value="">-- Chọn Trạng Thái --</option>
+                                    <option value="ACTIVE">Hoạt Động</option>
+                                    <option value="MAINTENANCE">Bảo Trì</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imageFile" class="form-label">Hình ảnh phòng họp</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-camera"></i></span>
+                                    <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
+                                </div>
+                                <div class="mt-3 text-center border rounded p-2 bg-light">
+                                    <p class="small text-muted mb-1">Ảnh hiện tại/Sắp tải lên:</p>
+                                    <img id="imagePreview"
+                                         th:src="${meetingRoomForm.imageUrl != null} ? @{'/user-photos/' + ${meetingRoomForm.imageUrl}} : @{/assets/img/rooms/default-room.jpg}"
+                                         alt="Preview"
+                                         style="max-height: 150px; border-radius: 8px; object-fit: cover;">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <h5 class="mb-2">Thiết bị có trong phòng</h5>
+                                <div class="border rounded p-3 bg-light">
+                                    <div th:if="${#lists.isEmpty(devices)}" class="text-muted">Chưa có thiết bị.</div>
+
+                                    <div th:each="dev, stat : ${devices}" class="row align-items-center py-2 border-bottom" th:with="currentDevId=${dev.id}">
+                                        <div class="col-7">
+                                            <div class="form-check">
+                                                <input class="form-check-input device-check"
+                                                       type="checkbox"
+                                                       th:id="${'dev_' + dev.id}"
+                                                       th:attr="data-target=${'qty_' + dev.id}"
+                                                       th:checked="${meetingRoomForm.assetItems != null and meetingRoomForm.assetItems.?[deviceId == __${currentDevId}__].size() > 0}">
+
+                                                <label class="form-check-label" th:for="${'dev_' + dev.id}">
+                                                    <strong th:text="${dev.name}"></strong>
+                                                    <span class="text-muted small" th:text="${' (' + (dev.type ?: '') + ')'}"></span>
+                                                </label>
+                                            </div>
+                                            <input type="hidden" th:name="${'assetItems[' + stat.index + '].deviceId'}" th:value="${dev.id}"/>
+                                        </div>
+
+                                        <div class="col-5">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-text">SL</span>
+                                                <input class="form-control device-qty"
+                                                       type="number" min="0"
+                                                       th:id="${'qty_' + dev.id}"
+                                                       th:name="${'assetItems[' + stat.index + '].quantity'}"
+                                                       th:value="${meetingRoomForm.assetItems != null and meetingRoomForm.assetItems.?[deviceId == __${currentDevId}__].size() > 0
+                                                                 ? meetingRoomForm.assetItems.?[deviceId == __${currentDevId}__][0].quantity
+                                                                 : 0}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 mt-4">
+                                <button type="submit" class="btn btn-primary px-4"><i class="bi bi-check-circle"></i> Lưu Phòng Họp</button>
+                                <a href="/admin/meeting-rooms" class="btn btn-secondary px-4">Hủy</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Hướng Dẫn</h5>
+                        <ul class="ps-3 small text-muted">
+                            <li class="mb-2"><strong>Upload ảnh:</strong> Hệ thống lưu ảnh vào <code>user-photos</code>. Hỗ trợ định dạng JPG, PNG.</li>
+                            <li><strong>Thiết bị:</strong> Tích chọn thiết bị và nhập số lượng tương ứng có trong phòng.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<div th:replace="~{layouts/admin-footer :: admin-footer}"></div>
+
+<script>
+    document.getElementById('imageFile').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) { preview.src = e.target.result; }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function syncQtyInput(checkbox) {
+        const targetId = checkbox.dataset.target;
+        const qty = document.getElementById(targetId);
+        if (!qty) return;
+        if (checkbox.checked) {
+            qty.disabled = false;
+            if (qty.value === "" || qty.value === "0") qty.value = 1;
+        } else {
+            qty.value = 0;
+            qty.disabled = true;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".device-check").forEach(cb => {
+            syncQtyInput(cb);
+            cb.addEventListener("change", () => syncQtyInput(cb));
+        });
+    });
+
+    function formatCurrency(input) {
+        let value = input.value.replace(/\./g, '');
+        if (isNaN(value) || value === "") {
+            input.value = "";
+            document.getElementById('pricePerHour').value = "";
+            return;
+        }
+        document.getElementById('pricePerHour').value = value;
+        input.value = parseInt(value).toLocaleString('de-DE');
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const hiddenPrice = document.getElementById('pricePerHour');
+        const displayPrice = document.getElementById('priceDisplay');
+        if (hiddenPrice && hiddenPrice.value) {
+            displayPrice.value = parseInt(hiddenPrice.value).toLocaleString('de-DE');
+        }
+    });
+</script>
+
+</body>
+</html>

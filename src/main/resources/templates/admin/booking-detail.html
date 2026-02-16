@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{layouts/admin-head :: admin-head}"></div>
+    <title>Chi tiết lịch họp | Admin</title>
+    <style>
+        .info-label { font-weight: 600; color: #444; width: 150px; display: inline-block; }
+        .detail-section { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .detail-section:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+<div th:replace="~{layouts/admin-navbar :: admin-navbar}"></div>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Chi tiết lịch họp #<span th:text="${booking.id}"></span></h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/admin/bookings}">Danh sách</a></li>
+                <li class="breadcrumb-item active">Chi tiết</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="card-title p-0">Thông tin chung</h5>
+                            <span class="badge"
+                                  th:classappend="${booking.status == 'CONFIRMED' ? 'bg-success' : (booking.status == 'PENDING' ? 'bg-warning' : 'bg-danger')}"
+                                  th:text="${booking.status}"></span>
+                        </div>
+
+                        <div class="detail-section">
+                            <span class="info-label">Chủ đề:</span>
+                            <span class="fw-bold fs-5 text-primary" th:text="${booking.title}"></span>
+                        </div>
+
+                        <div class="detail-section">
+                            <span class="info-label">Phòng họp:</span>
+                            <span class="badge bg-light text-dark border" th:text="${roomName}"></span>
+                        </div>
+
+                        <div class="detail-section">
+                            <span class="info-label">Người chủ trì:</span>
+                            <span th:text="${hostName}"></span>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="info-label">Bắt đầu:</span>
+                                    <span th:text="${#temporals.format(booking.startTime, 'dd/MM/yyyy HH:mm')}"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="info-label">Kết thúc:</span>
+                                    <span th:text="${#temporals.format(booking.endTime, 'dd/MM/yyyy HH:mm')}"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <span class="info-label">Mô tả:</span>
+                            <p class="mt-2 text-muted" th:text="${booking.description ?: 'Không có mô tả.'}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body pt-3">
+                        <h5 class="card-title">Danh sách người tham dự</h5>
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="att : ${attendees}">
+                                <td th:text="${att.fullName}"></td>
+                                <td th:text="${att.email}"></td>
+                                <td>
+                                    <span class="small" th:text="${att.status}"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <h5 class="card-title">Thiết bị đi kèm</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" th:each="d : ${devices}">
+                                <span th:text="${d.deviceName}"></span>
+                                <span class="badge bg-primary rounded-pill" th:text="${d.quantity}">1</span>
+                            </li>
+                            <li th:if="${#lists.isEmpty(devices)}" class="list-group-item text-muted">Không mượn thiết bị.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Hành động</h5>
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/admin/bookings/{id}/edit(id=${booking.id})}" class="btn btn-primary">
+                                <i class="bi bi-pencil"></i> Chỉnh sửa lịch
+                            </a>
+                            <form th:if="${booking.status == 'PENDING'}" th:action="@{/admin/bookings/{id}/confirm(id=${booking.id})}" method="post">
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-check-circle"></i> Duyệt lịch họp
+                                </button>
+                            </form>
+                            <a th:href="@{/admin/bookings}" class="btn btn-secondary">Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{layouts/admin-footer :: admin-footer}"></div>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<div th:fragment="admin-navbar"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a th:href="@{/admin}" class="logo d-flex align-items-center">
+                <img th:src="@{/admin/assets/img/logo.png}" alt="">
+                <span class="d-none d-lg-block">OnMeet</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" th:action="@{/admin/search}">
+                <input type="text" name="query" placeholder="Tìm kiếm..." title="Nhập từ khóa tìm kiếm">
+                <button type="submit" title="Tìm kiếm"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item d-block d-lg-none">
+                    <a class="nav-link nav-icon search-bar-toggle " href="#">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number"
+                              th:if="${pendingCount > 0}"
+                              th:text="${pendingCount}">1</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            Bạn có <span th:text="${pendingCount != null ? pendingCount : 0}">0</span> thông báo mới
+                            <a th:href="@{/admin/bookings}"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <th:block th:each="pb : ${pendingNotifications}">
+                            <li class="notification-item">
+                                <i class="bi bi-calendar-plus text-warning"></i>
+                                <div>
+                                    <h4>Lịch họp mới</h4>
+                                    <p th:text="'Yêu cầu duyệt: ' + ${pb.title}"></p>
+                                    <p class="small text-muted"
+                                       th:text="${#temporals.format(pb.startTime, 'HH:mm dd/MM')}"></p>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                        </th:block>
+
+                        <li th:if="${#lists.isEmpty(pendingNotifications)}" class="p-3 text-center">
+                            <span class="text-muted small">Không có thông báo mới</span>
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a th:href="@{/admin/bookings}">Xem tất cả thông báo</a>
+                        </li>
+                    </ul>
+                </li>
+
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">-->
+<!--                        <i class="bi bi-chat-left-text"></i>-->
+<!--                        <span class="badge bg-success badge-number">1</span>-->
+<!--                    </a>-->
+
+<!--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">-->
+<!--                        <li class="dropdown-header">-->
+<!--                            Bạn có 1 tin nhắn mới-->
+<!--                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>-->
+<!--                        </li>-->
+
+<!--                        <li><hr class="dropdown-divider"></li>-->
+
+<!--                        <li class="message-item">-->
+<!--                            <a href="#">-->
+<!--                                <img th:src="@{/admin/assets/img/messages-1.jpg}" alt="" class="rounded-circle">-->
+<!--                                <div>-->
+<!--                                    <h4>Maria Hudson</h4>-->
+<!--                                    <p>Xin chào, tôi cần hỗ trợ về đơn hàng...</p>-->
+<!--                                    <p>4 giờ trước</p>-->
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li><hr class="dropdown-divider"></li>-->
+
+<!--                        <li class="dropdown-footer">-->
+<!--                            <a href="#">Xem tất cả tin nhắn</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+<!--                        <img th:src="@{/admin/assets/img/profile-img.jpg}" alt="Profile" class="rounded-circle">-->
+                        <span class="d-none d-md-block dropdown-toggle ps-2"
+                              sec:authentication="name"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6 sec:authentication="name"></h6>
+                            <span>ADMIN</span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" th:href="@{/admin-profile}">
+                                <i class="bi bi-person"></i>
+                                <span>Hồ sơ của tôi</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" th:href="@{/admin/settings}">
+                                <i class="bi bi-gear"></i>
+                                <span>Cài đặt tài khoản</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" th:href="@{/admin/faq}">
+                                <i class="bi bi-question-circle"></i>
+                                <span>Trợ giúp & FAQ</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li >
+                            <form th:action="@{/admin/logout}" method="post" class="m-0">
+                                <button class="dropdown-item d-flex align-items-center" type="submit">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    <span>Đăng xuất</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </header>
+<!--SIBEBAR-->
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link " th:href="@{/admin}">
+                    <i class="bi bi-grid"></i>
+                    <span>Trang chủ</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="javascript:void(0)">
+                    <i class="bi bi-menu-button-wide"></i><span>Quản lý người dùng</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/admin/users}">
+                            <i class="bi bi-circle"></i><span>Danh sách người dùng</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#devices-nav" data-bs-toggle="collapse" href="javascript:void(0)">
+                    <i class="bi bi-hdd-stack"></i>
+                    <span>Quản lý thiết bị</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="devices-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/admin/devices}">
+                            <i class="bi bi-circle"></i><span>Danh sách thiết bị</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/admin/devices/available}">
+                            <i class="bi bi-circle"></i><span>Thiết bị có sẵn</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="javascript:void(0)">
+                    <i class="bi bi-journal-text"></i><span>Quản lý phòng họp</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a th:href="@{/admin/meeting-rooms}">
+                            <i class="bi bi-circle"></i><span>Danh sách phòng họp</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/admin/bookings}">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Quản lý lịch họp</span>
+                </a>
+            </li>
+
+            <li class="nav-heading">Trang chức năng</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/admin/admin-center}">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>Trung tâm điều hành</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/admin/profile}">
+                    <i class="bi bi-person"></i>
+                    <span>Hồ sơ cá nhân</span>
+                </a>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link collapsed" th:href="@{/admin-register}">
+                    <i class="bi bi-card-list"></i>
+                    <span>Đăng ký</span>
+                </a>
+            </li>
+            <li class="nav-item"  sec:authorize="!isAuthenticated()">
+                <a class="nav-link collapsed" th:href="@{/admin-login}">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>Đăng nhập</span>
+                </a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link collapsed" th:href="@{/admin-404}">-->
+<!--                    <i class="bi bi-dash-circle"></i>-->
+<!--                    <span>404</span>-->
+<!--                </a>-->
+<!--            </li>-->
+        </ul>
+    </aside>
+</div>

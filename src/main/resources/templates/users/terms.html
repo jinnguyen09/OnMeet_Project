@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+
+<body class="index-page">
+
+<!-- Navbar start -->
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+<!-- Navbar End -->
+
+<main class="main" style="margin-top: 100px;">
+
+  <div class="page-title">
+    <div class="heading">
+      <div class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-lg-8">
+            <h1 class="heading-title">Điều khoản sử dụng</h1>
+            <p class="mb-0">
+              Chào mừng bạn đến với hệ thống quản lý lịch họp thông minh.
+              Vui lòng đọc kỹ các quy định dưới đây để đảm bảo hiệu suất làm việc chung và tối ưu hóa tài nguyên cho doanh nghiệp.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="breadcrumbs">
+      <div class="container">
+        <ol>
+          <li><a th:href="@{/home}">Trang chủ</a></li>
+          <li class="current">Điều khoản</li>
+        </ol>
+      </div>
+    </nav>
+  </div><section id="terms-of-service" class="terms-of-service section">
+
+  <div class="container" data-aos="fade-up">
+    <div class="tos-header text-center" data-aos="fade-up">
+      <span class="last-updated">Cập nhật lần cuối: 17/12/2025</span>
+      <h2>Quy định & Chính sách</h2>
+      <p>Các nguyên tắc nhằm đảm bảo công bằng và hiệu quả cho mọi nhân sự</p>
+    </div>
+
+    <div class="tos-content" data-aos="fade-up" data-aos-delay="200">
+      <div id="agreement" class="content-section">
+        <h3>1. Chấp thuận sử dụng</h3>
+        <p>Bằng việc truy cập và sử dụng hệ thống đặt phòng họp này, bạn đồng ý tuân thủ các quy định dưới đây cùng các chính sách nội bộ của công ty. Hệ thống được thiết kế để tối ưu hóa thời gian và không gian làm việc chung.</p>
+        <div class="info-box">
+          <i class="bi bi-info-circle"></i>
+          <p>Điều khoản này áp dụng cho toàn bộ nhân viên, quản lý và đối tác được cấp quyền truy cập hệ thống.</p>
+        </div>
+      </div>
+
+      <div id="booking-rules" class="content-section">
+        <h3>2. Quy định Đặt phòng & Hủy lịch</h3>
+        <p>Để đảm bảo tài nguyên phòng họp không bị lãng phí, người dùng cần tuân thủ các quy tắc sau:</p>
+        <ul class="list-items">
+          <li><strong>Đặt trước:</strong> Các cuộc họp quan trọng cần được đặt trước tối thiểu 24h.</li>
+          <li><strong>Check-in:</strong> Vui lòng xác nhận nhận phòng (Check-in) trong vòng 15 phút đầu tiên. Nếu không, hệ thống sẽ tự động hủy để nhường phòng cho người khác.</li>
+          <li><strong>Hủy lịch:</strong> Nếu thay đổi kế hoạch, vui lòng hủy lịch họp trên hệ thống ngay lập tức để giải phóng tài nguyên.</li>
+          <li><strong>Thời gian:</strong> Kết thúc cuộc họp đúng giờ để không ảnh hưởng đến khung giờ tiếp theo.</li>
+        </ul>
+      </div>
+
+      <div id="user-accounts" class="content-section">
+        <h3>3. Tài khoản và Bảo mật</h3>
+        <p>Tài khoản được cấp phát dựa trên mã nhân viên/email công ty. Bạn có trách nhiệm bảo mật thông tin đăng nhập của mình.</p>
+        <div class="alert-box">
+          <i class="bi bi-exclamation-triangle"></i>
+          <div class="alert-content">
+            <h5>Lưu ý quan trọng</h5>
+            <p>Mọi hành động đặt phòng, hủy phòng thực hiện dưới tài khoản của bạn sẽ được hệ thống ghi nhận và dùng làm cơ sở đánh giá KPI ý thức sử dụng tài sản chung.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="assets" class="content-section">
+        <h3>4. Sử dụng Thiết bị & Tài sản</h3>
+        <p>Phòng họp được trang bị các thiết bị đắt tiền (Màn hình, Projector, Hệ thống âm thanh). Người dùng có trách nhiệm:</p>
+        <ul class="list-items">
+          <li>Tắt toàn bộ thiết bị điện (Đèn, Máy lạnh, Màn hình) trước khi rời khỏi phòng.</li>
+          <li>Sắp xếp lại ghế ngồi và vệ sinh bảng trắng sau khi sử dụng.</li>
+          <li>Báo cáo ngay cho bộ phận IT/Admin nếu phát hiện thiết bị hư hỏng.</li>
+        </ul>
+      </div>
+
+      <div id="prohibited" class="content-section">
+        <h3>5. Các hành vi bị nghiêm cấm</h3>
+        <p>Chúng tôi nghiêm cấm các hành vi gây ảnh hưởng đến hiệu suất chung của tập thể:</p>
+        <div class="prohibited-list">
+          <div class="prohibited-item">
+            <i class="bi bi-x-circle"></i>
+            <span>Đặt phòng "ảo" (Book nhưng không sử dụng)</span>
+          </div>
+          <div class="prohibited-item">
+            <i class="bi bi-x-circle"></i>
+            <span>Sử dụng phòng họp cho mục đích cá nhân</span>
+          </div>
+          <div class="prohibited-item">
+            <i class="bi bi-x-circle"></i>
+            <span>Chiếm dụng phòng khi chưa đặt lịch trên hệ thống</span>
+          </div>
+          <div class="prohibited-item">
+            <i class="bi bi-x-circle"></i>
+            <span>Can thiệp trái phép vào hệ thống phần mềm</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="privacy" class="content-section">
+        <h3>6. Bảo mật thông tin cuộc họp</h3>
+        <p>Hệ thống cam kết bảo mật các thông tin về tiêu đề cuộc họp, nội dung biên bản (nếu có) và danh sách người tham dự. Dữ liệu này chỉ được trích xuất khi có yêu cầu từ Ban Giám Đốc hoặc bộ phận Thanh tra.</p>
+      </div>
+
+      <div id="disclaimer" class="content-section">
+        <h3>7. Miễn trừ trách nhiệm</h3>
+        <div class="disclaimer-box">
+          <p>Bộ phận quản trị hệ thống không chịu trách nhiệm trong các trường hợp:</p>
+          <ul>
+            <li>Xung đột lịch họp do lỗi người dùng không kiểm tra kỹ thời gian.</li>
+            <li>Mất mát tài sản cá nhân để quên trong phòng họp.</li>
+            <li>Gián đoạn dịch vụ do bảo trì hệ thống (sẽ có thông báo trước).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="changes" class="content-section">
+        <h3>8. Sửa đổi quy định</h3>
+        <p>Ban quản trị có quyền thay đổi các điều khoản này để phù hợp với tình hình thực tế của doanh nghiệp. Thông báo thay đổi sẽ được gửi qua email hoặc hiển thị trên bảng tin của hệ thống.</p>
+        <div class="notice-box">
+          <i class="bi bi-bell"></i>
+          <p>Việc tiếp tục sử dụng hệ thống sau khi quy định mới được ban hành đồng nghĩa với việc bạn chấp thuận các thay đổi đó.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tos-contact" data-aos="fade-up" data-aos-delay="300">
+      <div class="contact-box">
+        <div class="contact-icon">
+          <i class="bi bi-headset"></i> </div>
+        <div class="contact-content">
+          <h4>Cần hỗ trợ kỹ thuật?</h4>
+          <p>Nếu gặp lỗi đặt phòng hoặc vấn đề thiết bị, vui lòng liên hệ IT Helpdesk.</p>
+          <a href="#" class="contact-link">Gửi yêu cầu hỗ trợ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section></main>
+
+<!-- Footer -->
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/vendor/purecounter/purecounter_vanilla.js}"></script>
+<script th:src="@{/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
+
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

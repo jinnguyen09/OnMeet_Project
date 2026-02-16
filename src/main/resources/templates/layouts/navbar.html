@@ -1,0 +1,163 @@
+    <div th:fragment="navbar" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+            <a th:href="@{/users/home}" class="logo d-flex align-items-center">
+                <h1 class="sitename">OnMeet</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a th:href="@{/users/home}" th:classappend="${activePage == 'home'} ? 'active'">Trang chủ</a></li>
+                    <li><a href="#about">Giới thiệu</a></li>
+                    <li><a th:href="@{/users/notifications}" th:classappend="${activePage == 'notifications'} ? 'active'">Lịch họp</a></li>
+                    <li><a th:href="@{/users/meeting-rooms}" th:classappend="${activePage == 'meeting-rooms'} ? 'active'">Phòng họp</a></li>
+                    <li><a th:href="@{/users/events}" th:classappend="${activePage == 'events'} ? 'active'">Sự kiện</a></li>
+
+                    <li class="dropdown">
+                        <a href="#" th:classappend="${activePage == 'profile' or activePage == 'list-friends' or activePage == 'history' or activePage == 'terms' or activePage == 'policy'} ? 'active'">
+                            <span>Trang cá nhân</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
+                        <ul>
+                            <li><a th:href="@{/profile}" th:classappend="${activePage == 'profile'} ? 'active'">Hồ sơ</a></li>
+                            <li><a th:href="@{/users/history}" th:classappend="${activePage == 'history'} ? 'active'">Lịch sử cuộc họp</a></li>
+                            <li><a th:href="@{/users/terms}" th:classappend="${activePage == 'terms'} ? 'active'">Điều khoản</a></li>
+                            <li><a th:href="@{/users/policy}" th:classappend="${activePage == 'policy'} ? 'active'">Quyền riêng tư</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a th:href="@{/users/contact}" th:classappend="${activePage == 'contact'} ? 'active'">Liên hệ</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-3">
+                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none position-relative"
+                       id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
+
+                        <!-- badge unread -->
+                        <span th:if="${navUnreadCount != null and navUnreadCount > 0}"
+                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light"
+                              style="font-size: 0.6rem;">
+      <span th:text="${navUnreadCount}">0</span>
+      <span class="visually-hidden">unread notifications</span>
+    </span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 p-0"
+                        aria-labelledby="notificationDropdown" style="width: 340px;">
+
+                        <!-- header -->
+                        <li class="p-3 border-bottom d-flex justify-content-between align-items-center bg-light rounded-top-3">
+                            <h6 class="mb-0 fw-bold">Thông báo</h6>
+
+                            <!-- link mark all read (nếu b có endpoint) -->
+                            <a th:href="@{/users/notifications}" class="small text-primary text-decoration-none">
+                                Xem tất cả
+                            </a>
+                        </li>
+
+                        <!-- list -->
+                        <li class="scrollable-notifications" style="max-height: 320px; overflow-y: auto;">
+
+                            <!-- empty -->
+                            <div th:if="${navNotis == null or #lists.isEmpty(navNotis)}" class="p-3 text-center text-muted">
+                                Không có thông báo mới
+                            </div>
+
+                            <!-- items -->
+                            <a th:each="nr : ${navNotis}"
+                               th:with="
+                                    bId=${nr.notification.bookingId},
+                                    st=${(bId != null and navStatusMap != null) ? navStatusMap[bId.toString()] : null}
+                                 "
+                               class="dropdown-item d-flex align-items-start p-3 border-bottom"
+                               th:href="@{/users/notifications}">
+
+                                <!-- icon -->
+                                <div class="rounded-circle p-2 me-3 d-flex align-items-center justify-content-center"
+                                     style="width: 40px; height: 40px;"
+                                     th:classappend="${nr.notification.type == 'INVITE'} ? ' bg-primary-subtle text-primary' : ' bg-secondary-subtle text-secondary'">
+                                    <i class="bi" th:classappend="${nr.notification.type == 'INVITE'} ? ' bi-person-plus' : ' bi-bell'"></i>
+                                </div>
+
+                                <div class="flex-grow-1">
+                                    <!-- title line -->
+                                    <div class="d-flex justify-content-between align-items-start gap-2">
+                                        <p class="mb-1 small fw-bold">
+                                            <span th:if="${nr.notification.type == 'INVITE'}">Lời mời tham dự</span>
+                                            <span th:if="${nr.notification.type != 'INVITE'}">Thông báo</span>
+                                        </p>
+
+                                        <!-- NEW dot -->
+                                        <span th:if="${nr.isRead == false}" class="badge bg-danger" style="font-size:10px;">NEW</span>
+                                    </div>
+
+                                    <!-- content -->
+                                    <p class="mb-1 small text-muted text-wrap" th:text="${nr.notification.content}">
+                                        Nội dung thông báo...
+                                    </p>
+
+                                    <!-- status for INVITE -->
+                                    <div th:if="${nr.notification.type == 'INVITE'}" class="d-flex align-items-center gap-2">
+                                    <span th:if="${st == null or #strings.equalsIgnoreCase(st,'INVITED')}"
+                                          class="badge bg-warning text-dark">
+                                      Đang chờ phản hồi
+                                    </span>
+
+                                        <span th:if="${#strings.equalsIgnoreCase(st,'ACCEPTED')}"
+                                              class="badge bg-success">
+                                          Đã chấp nhận
+                                        </span>
+
+                                        <span th:if="${#strings.equalsIgnoreCase(st,'DECLINED')}"
+                                              class="badge bg-secondary">
+                                          Đã từ chối
+                                        </span>
+                                    </div>
+
+                                    <!-- time -->
+                                    <small class="text-secondary" style="font-size: 0.75rem;"
+                                           th:text="${#temporals.format(nr.notification.createdAt,'dd/MM HH:mm')}">
+                                        10 phút trước
+                                    </small>
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- footer -->
+                        <li class="p-2 text-center bg-light rounded-bottom-3 border-top">
+                            <a th:href="@{/users/notifications}" class="text-decoration-none small fw-bold text-primary">
+                                Xem tất cả thông báo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <a class="btn-getstarted" th:href="@{/users/login}" sec:authorize="!isAuthenticated()">Đăng nhập</a>
+                <div class="dropdown" sec:authorize="isAuthenticated()">
+                    <a class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                       href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Xin chào,
+                        <span class="ms-1 fw-semibold" th:text="${navFullname}">User</span>
+                        <!-- <span class="ms-1 fw-semibold" sec:authentication="name"></span> -->
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3"
+                        aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2"
+                               th:href="@{/users/logout}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </header>
+</div>

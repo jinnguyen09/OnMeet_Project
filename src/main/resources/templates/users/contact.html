@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layouts/head :: head}">
+    <meta charset="UTF-8">
+    <title>Liên hệ - OnMeet</title>
+</head>
+
+<body class="index-page">
+
+<div th:replace="~{layouts/navbar :: navbar}"></div>
+
+<main class="main" style="margin-top: 80px;">
+
+    <div class="page-title">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1 class="heading-title">Liên hệ</h1>
+                        <p class="mb-0">Chúng tôi luôn sẵn sàng hỗ trợ 24/7 khi bạn gặp vấn đề.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a th:href="@{/users/home}">Trang chủ</a></li>
+                    <li class="current">Liên hệ</li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <section id="contact" class="contact section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info-panel">
+                    <div class="contact-info-header">
+                        <h3>Thông tin liên lạc</h3>
+                        <p>Vui lòng liên hệ vào giờ hành chính để luôn nhận hồi đáp.</p>
+                    </div>
+
+                    <div class="contact-info-cards">
+                        <div class="info-card">
+                            <div class="icon-container"><i class="bi bi-pin-map-fill"></i></div>
+                            <div class="card-content">
+                                <h4>Địa chỉ</h4>
+                                <p>Vinh, Nghệ An</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="icon-container"><i class="bi bi-envelope-open"></i></div>
+                            <div class="card-content">
+                                <h4>Email</h4>
+                                <p>thiepthanhx37@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="icon-container"><i class="bi bi-telephone-fill"></i></div>
+                            <div class="card-content">
+                                <h4>Số điện thoại</h4>
+                                <p>+84 899 073 387</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="icon-container"><i class="bi bi-clock-history"></i></div>
+                            <div class="card-content">
+                                <h4>Thời gian làm việc</h4>
+                                <p>Thứ hai - Thứ bảy : 7AM - 24PM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links-panel">
+                        <h5>Mạng xã hội</h5>
+                        <div class="social-icons">
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-panel">
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12090.49628373356!2d105.6813!3d18.6734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3139ce6119d67b7b%3A0x639097e3a9686300!2zVmluaCwgTmdow6UgQW4sIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1700000000000"
+                                width="100%" height="250" style="border:0; border-radius: 15px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <div class="form-container">
+                        <h3>Gửi lời nhắn</h3>
+                        <p>Chúng tôi sẽ phản hồi lại bạn sớm nhất có thể.</p>
+
+                        <form id="contact-form" class="php-email-form">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="nameInput" name="name"
+                                       th:value="${user != null ? user.fullname : ''}" placeholder="Tên" required>
+                                <label for="nameInput">Tên đầy đủ</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="emailInput" name="email"
+                                       th:value="${user != null ? user.email : ''}" placeholder="Email" required>
+                                <label for="emailInput">Địa chỉ email</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="subjectInput" name="title" placeholder="Chủ đề" required>
+                                <label for="subjectInput">Chủ đề</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="messageInput" name="message" style="height: 120px" placeholder="Nội dung" required></textarea>
+                                <label for="messageInput">Nội dung</label>
+                            </div>
+
+                            <div class="my-3">
+                                <div class="loading" style="display: none;">Đang gửi...</div>
+                                <div class="error-message" style="display: none; color: white;"></div>
+                                <div class="sent-message" style="display: none; color: white;">Tin nhắn của bạn đã được gửi thành công!</div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn-submit">Gửi tin nhắn <i class="bi bi-send-fill ms-2"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{layouts/footer :: footer}"></div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function() {
+        emailjs.init("MkzeqnL-ExCegfY-f");
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const loading = document.querySelector('.loading');
+        const sentMessage = document.querySelector('.sent-message');
+        const errorMessage = document.querySelector('.error-message');
+
+        loading.style.display = 'block';
+        sentMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+
+        const serviceID = 'service_rv8w7ih';
+        const templateID = 'template_lajb9vj';
+
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(function() {
+                loading.style.display = 'none';
+                sentMessage.style.display = 'block';
+                document.getElementById('contact-form').reset();
+            }, function(error) {
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML = "Lỗi: " + JSON.stringify(error);
+                console.log("FAILED...", error);
+            });
+    });
+</script>
+
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/aos/aos.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

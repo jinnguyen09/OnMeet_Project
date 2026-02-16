@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý phòng họp</title>
+    <div th:replace="~{layouts/admin-head :: admin-head}"></div>
+    <style>
+        .modal-header { background-color: #f8f9fa; border-bottom: 2px solid #dee2e6; }
+        .form-label { font-weight: 600; }
+    </style>
+</head>
+
+<body>
+
+<div th:replace="~{layouts/admin-navbar :: admin-navbar}"></div>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Quản lý phòng họp</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Phòng họp</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4 mt-2">
+                            <h5 class="card-title mb-0">Danh sách phòng họp</h5>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roomModal" onclick="openRoomModal('add')">
+                                <i class="bi bi-plus-circle"></i> Thêm phòng họp
+                            </button>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <label>
+                                        <input type="text" class="form-control" placeholder="Tìm theo địa chỉ, số phòng...">
+                                    </label>
+                                    <button class="btn btn-secondary">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover align-middle">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Tầng</th>
+                                    <th>Số phòng</th>
+                                    <th>Trang thiết bị</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>123 Nguyễn Văn Linh</td>
+                                    <td>3</td>
+                                    <td>P301</td>
+                                    <td>Máy chiếu, Điều hòa, Wifi</td>
+                                    <td><span class="badge bg-success">Đang trống</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#roomModal" onclick="openRoomModal('edit', this)">
+                                            <i class="bi bi-pencil"></i> Sửa
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteRoom(1)">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" id="roomModal" tabindex="-1" aria-labelledby="roomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="roomModalLabel">Thông tin phòng họp</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="roomForm">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <input type="hidden" id="roomId">
+
+                        <div class="col-md-12">
+                            <label class="form-label">Địa chỉ</label>
+                            <label for="roomAddress"></label><input type="text" class="form-control" id="roomAddress" placeholder="VD: 123 Nguyễn Văn Linh" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Tầng</label>
+                            <label for="roomFloor"></label><input type="number" class="form-control" id="roomFloor" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Số phòng</label>
+                            <label for="roomNumber"></label><input type="text" class="form-control" id="roomNumber" placeholder="VD: P301" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Trạng thái</label>
+                            <label for="roomStatus"></label><select class="form-select" id="roomStatus" required>
+                                <option value="Đang trống">Đang trống</option>
+                                <option value="Đang thuê">Đang thuê</option>
+                                <option value="Bảo trì">Bảo trì</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Trang thiết bị</label>
+                            <label for="roomEquipment"></label><textarea class="form-control" id="roomEquipment" rows="2" placeholder="Máy chiếu, Điều hòa, Loa..."></textarea>
+                            <small class="text-muted">Các thiết bị cách nhau bằng dấu phẩy</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layouts/admin-footer :: admin-footer}"></div>
+
+<script>
+    function openRoomModal(mode, button) {
+        const title = document.getElementById('roomModalLabel');
+        const form = document.getElementById('roomForm');
+
+        if (mode === 'add') {
+            title.innerHTML = '<i class="bi bi-plus-circle"></i> Thêm phòng họp mới';
+            form.reset();
+            document.getElementById('roomId').value = "";
+        } else {
+            title.innerHTML = '<i class="bi bi-pencil-square"></i> Chỉnh sửa phòng họp';
+
+            // Lấy dữ liệu từ dòng hiện tại
+            const row = button.closest('tr');
+            const cells = row.cells;
+
+            document.getElementById('roomId').value = cells[0].innerText;
+            document.getElementById('roomAddress').value = cells[1].innerText;
+            document.getElementById('roomFloor').value = cells[2].innerText;
+            document.getElementById('roomNumber').value = cells[3].innerText;
+            document.getElementById('roomEquipment').value = cells[4].innerText;
+
+            const statusText = cells[5].innerText.trim();
+            document.getElementById('roomStatus').value = statusText;
+        }
+    }
+
+    document.getElementById('roomForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = document.getElementById('roomId').value;
+        const msg = id ? "Cập nhật phòng họp thành công!" : "Thêm phòng họp mới thành công!";
+        alert(msg);
+        bootstrap.Modal.getInstance(document.getElementById('roomModal')).hide();
+    });
+
+    function deleteRoom(id) {
+        if(confirm("Bạn có chắc muốn xóa phòng họp này?")) {
+            alert("Đã xóa phòng có ID: " + id);
+        }
+    }
+</script>
+
+</body>
+</html>

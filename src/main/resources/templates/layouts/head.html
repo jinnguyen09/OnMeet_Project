@@ -1,0 +1,131 @@
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>OnMeeting - Home</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <link th:href="@{/assets/img/favicon.png}" rel="icon">
+    <link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/aos/aos.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/swiper/swiper-bundle.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/glightbox/css/glightbox.min.css}" rel="stylesheet">
+
+    <link th:href="@{/assets/css/main.css}" rel="stylesheet">
+</head>
+
+<!--Purchase-->
+<!--</section><section id="tickets" class="tickets section">-->
+
+<!--    <div class="container section-title" data-aos="fade-up">-->
+<!--        <h2>Tickets</h2>-->
+<!--        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>-->
+<!--    </div><div class="container" data-aos="fade-up" data-aos-delay="100">-->
+
+<!--    <div class="row justify-content-center">-->
+
+<!--        <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">-->
+<!--            <div class="ticket-card">-->
+<!--                <div class="ticket-header">-->
+<!--                    <div class="ticket-icon">-->
+<!--                        <i class="bi bi-calendar-event"></i>-->
+<!--                    </div>-->
+<!--                    <h4 class="ticket-title">Early Bird</h4>-->
+<!--                    <div class="price-section">-->
+<!--                        <span class="currency">$</span>-->
+<!--                        <span class="amount">75</span>-->
+<!--                    </div>-->
+<!--                    <p class="ticket-subtitle">Limited time offer</p>-->
+<!--                </div>-->
+<!--                <div class="ticket-body">-->
+<!--                    <ul class="benefits-list">-->
+<!--                        <li><i class="bi bi-check2"></i> Event entrance</li>-->
+<!--                        <li><i class="bi bi-check2"></i> Welcome kit</li>-->
+<!--                        <li><i class="bi bi-check2"></i> Light refreshments</li>-->
+<!--                        <li><i class="bi bi-x"></i> Premium seating</li>-->
+<!--                        <li><i class="bi bi-x"></i> Networking session</li>-->
+<!--                    </ul>-->
+<!--                    <a th:href="@{/buy-tickets}" class="ticket-btn">Purchase Now</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div><div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">-->
+<!--        <div class="ticket-card premium">-->
+<!--            <div class="ticket-header">-->
+<!--                <div class="ticket-icon">-->
+<!--                    <i class="bi bi-star-fill"></i>-->
+<!--                </div>-->
+<!--                <h4 class="ticket-title">Regular</h4>-->
+<!--                <div class="price-section">-->
+<!--                    <span class="currency">$</span>-->
+<!--                    <span class="amount">125</span>-->
+<!--                </div>-->
+<!--                <p class="ticket-subtitle">Best value package</p>-->
+<!--            </div>-->
+<!--            <div class="ticket-body">-->
+<!--                <ul class="benefits-list">-->
+<!--                    <li><i class="bi bi-check2"></i> Event entrance</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Welcome kit</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Light refreshments</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Premium seating</li>-->
+<!--                    <li><i class="bi bi-x"></i> Networking session</li>-->
+<!--                </ul>-->
+<!--                <a th:href="@{/buy-tickets}" class="ticket-btn">Purchase Now</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div><div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">-->
+<!--        <div class="ticket-card">-->
+<!--            <div class="ticket-header">-->
+<!--                <div class="ticket-icon">-->
+<!--                    <i class="bi bi-gem"></i>-->
+<!--                </div>-->
+<!--                <h4 class="ticket-title">Premium</h4>-->
+<!--                <div class="price-section">-->
+<!--                    <span class="currency">$</span>-->
+<!--                    <span class="amount">195</span>-->
+<!--                </div>-->
+<!--                <p class="ticket-subtitle">Full experience access</p>-->
+<!--            </div>-->
+<!--            <div class="ticket-body">-->
+<!--                <ul class="benefits-list">-->
+<!--                    <li><i class="bi bi-check2"></i> Event entrance</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Welcome kit</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Light refreshments</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Premium seating</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Networking session</li>-->
+<!--                </ul>-->
+<!--                <a th:href="@{/buy-tickets}" class="ticket-btn">Purchase Now</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div><div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">-->
+<!--        <div class="ticket-card">-->
+<!--            <div class="ticket-header">-->
+<!--                <div class="ticket-icon">-->
+<!--                    <i class="bi bi-bank"></i>-->
+<!--                </div>-->
+<!--                <h4 class="ticket-title">VIP</h4>-->
+<!--                <div class="price-section">-->
+<!--                    <span class="currency">$</span>-->
+<!--                    <span class="amount">275</span>-->
+<!--                </div>-->
+<!--                <p class="ticket-subtitle">Exclusive access</p>-->
+<!--            </div>-->
+<!--            <div class="ticket-body">-->
+<!--                <ul class="benefits-list">-->
+<!--                    <li><i class="bi bi-check2"></i> All premium benefits</li>-->
+<!--                    <li><i class="bi bi-check2"></i> VIP lounge access</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Meet &amp; greet</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Exclusive merchandise</li>-->
+<!--                    <li><i class="bi bi-check2"></i> Priority support</li>-->
+<!--                </ul>-->
+<!--                <a th:href="@{/buy-tickets}" class="ticket-btn">Purchase Now</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div></div>-->
+<!--</div>-->
