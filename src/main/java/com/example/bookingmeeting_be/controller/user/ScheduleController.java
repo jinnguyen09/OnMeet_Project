@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ScheduleController {
-    @GetMapping("/schedule")
+    @GetMapping("users/schedule")
     public String schedule(Model model) {
         model.addAttribute("activePage", "schedule");
         return "users/schedule";

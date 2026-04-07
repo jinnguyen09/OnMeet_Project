@@ -98,7 +98,6 @@ public class UserViewAuthController {
 
             userService.register(u);
 
-            // auto-login
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(e, p)
             );
@@ -120,7 +119,7 @@ public class UserViewAuthController {
             return "redirect:/users/login";
 
         } catch (RuntimeException ex) {
-            model.addAttribute("error", ex.getMessage()); // Email already exists...
+            model.addAttribute("error", ex.getMessage());
             return "auth/register";
         }
     }

@@ -20,7 +20,6 @@ public class NotificationController {
     @Autowired private UserService userService;
 
     private Integer currentUserId(Authentication auth) {
-        // Cauth.getName() là email
         return userService.findByEmail(auth.getName()).getUserId();
 
     }

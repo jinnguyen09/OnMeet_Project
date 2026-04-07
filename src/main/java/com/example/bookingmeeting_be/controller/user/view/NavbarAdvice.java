@@ -24,23 +24,22 @@ public class NavbarAdvice {
         if (auth == null || !auth.isAuthenticated()) return;
 
         Integer userId = currentUserId(auth);
-        var inbox = notificationService.getInbox(userId); // hoặc tạo method getInboxLimit(userId, 5)
+        var inbox = notificationService.getInbox(userId);
         var navNotis = inbox.stream().limit(5).toList();
 
         model.addAttribute("navUnreadCount", notificationService.getUnreadCount(userId));
         model.addAttribute("navNotis", navNotis);
         model.addAttribute("navStatusMap", notificationService.getAttendeeStatusMap(userId, navNotis));
-        // nhớ: getAttendeeStatusMap nên trả Map<String,String> như mình đã hướng dẫn
     }
     @ModelAttribute("navFullname")
     public String navFullname(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) return null;
 
-        String email = authentication.getName(); // đang là email/username
+        String email = authentication.getName();
         try {
             return userService.findByEmail(email).getFullname();
         } catch (Exception e) {
-            return email; // fallback nếu không có user
+            return email;
         }
     }
 }
