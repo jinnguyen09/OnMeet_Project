@@ -34,7 +34,7 @@
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card sales-card">
                             <div class="card-body">
-                                <h5 class="card-title">Lịch họp hôm nay</h5>
+                                <h5 class="card-title">Lịch học hôm nay</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -61,7 +61,7 @@
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card revenue-card">
                             <div class="card-body">
-                                <h5 class="card-title">Cuộc họp tháng này</h5>
+                                <h5 class="card-title">Tổng lớp học tháng này</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -107,7 +107,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Thống kê lịch họp <span>| Hôm nay</span></h5>
+                                <h5 class="card-title">Thống kê lịch học <span>| Hôm nay</span></h5>
 
                                 <!-- Nếu template bạn dùng ApexCharts (NiceAdmin) -->
                                 <div id="reportsChart"></div>
@@ -130,7 +130,7 @@
                     <div class="col-12">
                         <div class="card recent-sales overflow-auto">
                             <div class="card-body">
-                                <h5 class="card-title">Lịch họp gần đây</h5>
+                                <h5 class="card-title">Lịch học gần đây</h5>
 
                                 <table class="table table-borderless">
                                     <thead>
@@ -145,7 +145,7 @@
 
                                     <tbody>
                                     <tr th:if="${stats.recentMeetings == null || #lists.isEmpty(stats.recentMeetings)}">
-                                        <td colspan="5" class="text-center text-muted py-4">Chưa có lịch họp.</td>
+                                        <td colspan="5" class="text-center text-muted py-4">Chưa có lịch học.</td>
                                     </tr>
 
                                     <tr th:each="m : ${stats.recentMeetings}">
@@ -172,7 +172,7 @@
                     <div class="col-12">
                         <div class="card top-selling overflow-auto">
                             <div class="card-body pb-0">
-                                <h5 class="card-title">Phòng họp được sử dụng nhiều</h5>
+                                <h5 class="card-title">Phòng học được sử dụng nhiều</h5>
 
                                 <table class="table table-borderless">
                                     <thead>
@@ -224,7 +224,7 @@
                                 <div class="activite-label">1 giờ</div>
                                 <i class="bi bi-circle-fill activity-badge text-warning"></i>
                                 <div class="activity-content">
-                                    Cập nhật phòng họp B203
+                                    Cập nhật phòng học B203
                                 </div>
                             </div>
                         </div>

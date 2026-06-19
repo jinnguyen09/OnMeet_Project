@@ -30,7 +30,7 @@ public class AdminUsersController {
         return "admin/admin-users";
     }
     @PostMapping("/users/{id}/roles")
-    public String updateRoles(@PathVariable int id,
+    public String updateRoles(@PathVariable("id") int id,
                               @RequestParam(required = false) List<String> roles,
                               @ModelAttribute UserResponse userUpdate) {
 

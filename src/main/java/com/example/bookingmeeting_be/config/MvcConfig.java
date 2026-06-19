@@ -11,10 +11,10 @@ import java.nio.file.Paths;
 public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        Path userPhotosDir = Paths.get("./user-photos");
-        String userPhotosPath = userPhotosDir.toFile().getAbsolutePath();
+        Path userPhotosDir = Paths.get("user-photos");
+        String userPhotosUri = userPhotosDir.toUri().toString();
 
         registry.addResourceHandler("/user-photos/**")
-                .addResourceLocations("file:/" + userPhotosPath + "/");
+                .addResourceLocations(userPhotosUri);
     }
 }

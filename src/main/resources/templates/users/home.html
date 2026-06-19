@@ -9,53 +9,97 @@
 
 <body class="index-page">
 
-<!-- Navbar start -->
+<!-- Navbar -->
 <div th:replace="~{layouts/navbar :: navbar}"></div>
-<!-- Navbar End -->
 
 <main class="main">
+
+  <!-- Hero Section -->
   <section id="hero" class="hero section">
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
       <div class="row align-items-center">
+
         <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
-          <h1 class="hero-title">ONMEET - HỆ THỐNG PHÒNG HỌP 2026</h1>
-          <p class="hero-subtitle">Giải pháp quản lý lịch họp số 1 cho doanh nghiệp</p>
-          <p class="hero-description">Phần mềm Quản lý công việc đặt lịch họp là một nền tảng thông minh, giúp doanh nghiệp tối ưu hóa việc sử dụng phòng họp, thiết bị và thời gian, đảm bảo các cuộc họp được tổ chức hiệu quả, đúng lúc, đúng chỗ.</p>
+          <h1 class="hero-title">SMARTMEETING - HỆ THỐNG PHÒNG HỌC 2026</h1>
+
+          <p class="hero-subtitle">
+            Giải pháp quản lý lịch học thông minh hàng đầu
+          </p>
+
+          <p class="hero-description">
+            Phần mềm quản lý lịch học là nền tảng thông minh giúp
+            nhà trường, trung tâm và giáo viên tối ưu hóa việc sử dụng
+            phòng học, thiết bị giảng dạy và thời gian học tập,
+            đảm bảo các buổi học được tổ chức hiệu quả, đúng lịch
+            và thuận tiện cho học viên.
+          </p>
+
           <div class="event-details mb-4">
-            <div class="detail-item" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="detail-item"
+                 data-aos="fade-up"
+                 data-aos-delay="300">
               <i class="bi bi-calendar-event"></i>
               <span>Hoạt động 24/7</span>
             </div>
-            <div class="detail-item" data-aos="fade-up" data-aos-delay="350">
+
+            <div class="detail-item"
+                 data-aos="fade-up"
+                 data-aos-delay="350">
               <i class="bi bi-geo-alt"></i>
-              <span>21+ tỉnh thành Việt Nam</span>
+              <span>21+ cơ sở đào tạo</span>
             </div>
-            <div class="detail-item" data-aos="fade-up" data-aos-delay="400">
+
+            <div class="detail-item"
+                 data-aos="fade-up"
+                 data-aos-delay="400">
               <i class="bi bi-people"></i>
-              <span>200+ Đội ngũ nhân viên</span>
+              <span>200+ Giáo viên & nhân sự</span>
             </div>
-          </div>
-          <div class="hero-actions" data-aos="fade-up" data-aos-delay="450">
-            <a th:href="@{/register}" class="btn btn-primary btn-lg me-3">Đăng ký ngay</a>
-            <a href="" class="btn btn-outline-primary btn-lg">Tạo cuộc họp</a>
           </div>
 
-          <div class="countdown-wrapper mt-4" data-aos="fade-up" data-aos-delay="500">
-            <h5 class="countdown-title">Sự kiện sẽ bắt đầu sau:</h5>
-            <div class="countdown d-flex justify-content-start" data-count="2026/03/15">
+          <div class="hero-actions"
+               data-aos="fade-up"
+               data-aos-delay="450">
+
+            <a th:href="@{/register}"
+               class="btn btn-primary btn-lg me-3">
+              Đăng ký ngay
+            </a>
+
+            <a href=""
+               class="btn btn-outline-primary btn-lg">
+              Tạo lớp học
+            </a>
+          </div>
+
+          <div class="countdown-wrapper mt-4"
+               data-aos="fade-up"
+               data-aos-delay="500">
+
+            <h5 class="countdown-title">
+              Khóa học sẽ bắt đầu sau:
+            </h5>
+
+            <div class="countdown d-flex justify-content-start"
+                 data-count="2026/9/01">
+
               <div>
                 <h3 class="count-days"></h3>
                 <h4>Ngày</h4>
               </div>
+
               <div>
                 <h3 class="count-hours"></h3>
                 <h4>Giờ</h4>
               </div>
+
               <div>
                 <h3 class="count-minutes"></h3>
                 <h4>Phút</h4>
               </div>
+
               <div>
                 <h3 class="count-seconds"></h3>
                 <h4>Giây</h4>
@@ -64,98 +108,200 @@
           </div>
         </div>
 
-        <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+        <!-- Hero Image -->
+        <div class="col-lg-6"
+             data-aos="fade-left"
+             data-aos-delay="300">
+
           <div class="hero-image-wrapper">
-            <img th:src="@{/assets/img/events/gallery-7.webp}" alt="Global Tech Summit" class="img-fluid hero-image">
+
+            <img th:src="@{/assets/img/events/gallery-7.webp}"
+                 alt="Learning Platform"
+                 class="img-fluid hero-image">
+
             <div class="floating-badges">
-              <div class="badge-item" data-aos="zoom-in" data-aos-delay="600">
-                <i class="bi bi-award"></i>
-                <span>Cơ sở thiết bị</span>
+
+              <div class="badge-item"
+                   data-aos="zoom-in"
+                   data-aos-delay="600">
+                <i class="bi bi-book"></i>
+                <span>Phòng học hiện đại</span>
               </div>
-              <div class="badge-item" data-aos="zoom-in" data-aos-delay="650">
+
+              <div class="badge-item"
+                   data-aos="zoom-in"
+                   data-aos-delay="650">
                 <i class="bi bi-wifi"></i>
-                <span>Phát sóng trực tuyến</span>
+                <span>Học trực tuyến</span>
               </div>
-              <div class="badge-item" data-aos="zoom-in" data-aos-delay="700">
-                <i class="bi bi-gift"></i>
-                <span>Tổ chức sự kiện</span>
+
+              <div class="badge-item"
+                   data-aos="zoom-in"
+                   data-aos-delay="700">
+                <i class="bi bi-mortarboard"></i>
+                <span>Hệ thống đào tạo</span>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
+  <!-- About -->
   <section id="about" class="about section">
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <div class="content">
-          <h2 data-aos="fade-up" data-aos-delay="200">OnMeet - Phần mềm quản lý công việc đặt lịch họp</h2>
-          <p data-aos="fade-up" data-aos-delay="300">Sản phẩm hướng tới việc: Loại bỏ xung đột và chồng chéo lịch họp, tăng cường tính minh bạch trong sử dụng tài nguyên (phòng, thiết bị), tích hợp liền mạch với công cụ quen thuộc, tạo trải nghiệm tiện lợi cho nhân viên khi đặt phòng, mời họp, và quản lý công việc liên quan.</p>
-          <p data-aos="fade-up" data-aos-delay="400">Tối ưu hóa quy trình đặt lịch, quản lý hiệu quả phòng họp và thiết bị, nâng cao trải nghiệm người dùng, cung cấp dữ liệu và báo cáo cho quản lý, mở rộng tích hợp và hiện đại hóa</p>
 
-          <div class="stats-grid" data-aos="fade-up" data-aos-delay="500">
-            <div class="stat-item">
-              <div class="stat-number">21+</div>
-              <div class="stat-label">Trụ sở</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">60+</div>
-              <div class="stat-label">Hội Trường</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">120+</div>
-              <div class="stat-label">Phòng Ban</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">2000+</div>
-              <div class="stat-label">Khách Hàng</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="container"
+         data-aos="fade-up"
+         data-aos-delay="100">
 
-      <div class="col-lg-6">
-        <div class="image-wrapper" data-aos="zoom-in" data-aos-delay="300">
-          <img th:src="@{/assets/img/events/showcase-8.webp}" alt="Event showcase" class="img-fluid">
-          <div class="floating-card" data-aos="fade-up" data-aos-delay="600">
-            <div class="card-icon">
-              <i class="bi bi-people"></i>
-            </div>
-            <div class="card-content">
-              <h4>Cộng đồng</h4>
-              <p>Kết nối với cộng đồng lớn</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <div class="row align-items-center">
 
-      <div class="cta-section" data-aos="fade-up" data-aos-delay="100"
-           sec:authorize="!isAuthenticated()">
-          <div class="text-center">
-              <h3>Bạn đã sẵn sàng quản lý cuộc họp của bạn?</h3>
-              <p>Đăng ký để sử dụng đầy đủ các tính năng mà OnMeet mang lại.</p>
-              <div class="cta-buttons">
-                  <a th:href="@{/users/register}" class="btn btn-primary">Đăng ký ngay</a>
-                  <a th:href="@{/users/login}" class="btn btn-outline">Đăng nhập</a>
+        <div class="col-lg-6 mb-4 mb-lg-0">
+
+          <div class="content">
+
+            <h2 data-aos="fade-up"
+                data-aos-delay="200">
+              SMARTMEETING - Phần mềm quản lý lịch học thông minh
+            </h2>
+
+            <p data-aos="fade-up"
+               data-aos-delay="300">
+              Sản phẩm hướng tới việc loại bỏ xung đột
+              và chồng chéo lịch học, tăng cường hiệu quả
+              quản lý phòng học và thiết bị giảng dạy,
+              tích hợp liền mạch với các công cụ học tập
+              trực tuyến, tạo trải nghiệm thuận tiện cho
+              giáo viên và học viên khi đặt lịch học,
+              tham gia lớp học và quản lý học tập.
+            </p>
+
+            <p data-aos="fade-up"
+               data-aos-delay="400">
+              Tối ưu hóa quy trình quản lý lịch học,
+              sử dụng hiệu quả phòng học và thiết bị
+              giảng dạy, nâng cao trải nghiệm học tập,
+              cung cấp dữ liệu và báo cáo cho quản trị viên,
+              hỗ trợ mở rộng và hiện đại hóa môi trường giáo dục.
+            </p>
+
+            <!-- Stats -->
+            <div class="stats-grid"
+                 data-aos="fade-up"
+                 data-aos-delay="500">
+
+              <div class="stat-item">
+                <div class="stat-number">21+</div>
+                <div class="stat-label">
+                  Cơ sở đào tạo
+                </div>
               </div>
+
+              <div class="stat-item">
+                <div class="stat-number">60+</div>
+                <div class="stat-label">
+                  Phòng học
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-number">120+</div>
+                <div class="stat-label">
+                  Giảng viên
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-number">2000+</div>
+                <div class="stat-label">
+                  Học viên
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <!-- About image -->
+        <div class="col-lg-6">
+
+          <div class="image-wrapper"
+               data-aos="zoom-in"
+               data-aos-delay="300">
+
+            <img th:src="@{/assets/img/events/showcase-8.webp}"
+                 alt="Learning showcase"
+                 class="img-fluid">
+
+            <div class="floating-card"
+                 data-aos="fade-up"
+                 data-aos-delay="600">
+
+              <div class="card-icon">
+                <i class="bi bi-mortarboard"></i>
+              </div>
+
+              <div class="card-content">
+                <h4>Cộng đồng học tập</h4>
+                <p>Kết nối giáo viên và học viên</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-  </div>
-</section>
+      <!-- CTA -->
+      <div class="cta-section"
+           data-aos="fade-up"
+           data-aos-delay="100"
+           sec:authorize="!isAuthenticated()">
+
+        <div class="text-center">
+
+          <h3>
+            Bạn đã sẵn sàng quản lý lớp học của mình?
+          </h3>
+
+          <p>
+            Đăng ký để trải nghiệm đầy đủ các tính năng
+            quản lý học tập mà OnMeet mang lại.
+          </p>
+
+          <div class="cta-buttons">
+
+            <a th:href="@{/users/register}"
+               class="btn btn-primary">
+              Đăng ký ngay
+            </a>
+
+            <a th:href="@{/users/login}"
+               class="btn btn-outline">
+              Đăng nhập
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
 </main>
 
 <!-- Footer -->
 <div th:replace="~{layouts/footer :: footer}"></div>
 
-<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#"
+   id="scroll-top"
+   class="scroll-top d-flex align-items-center justify-content-center">
+  <i class="bi bi-arrow-up-short"></i>
+</a>
 
 <div id="preloader"></div>
 
+<!-- JS -->
 <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
 <script th:src="@{/assets/vendor/aos/aos.js}"></script>
@@ -164,7 +310,6 @@
 <script th:src="@{/assets/vendor/isotope-layout/isotope.pkgd.min.js}"></script>
 <script th:src="@{/assets/vendor/swiper/swiper-bundle.min.js}"></script>
 <script th:src="@{/assets/vendor/glightbox/js/glightbox.min.js}"></script>
-
 <script th:src="@{/assets/js/main.js}"></script>
 
 </body>

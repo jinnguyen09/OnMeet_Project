@@ -3,7 +3,7 @@
 
 <head th:replace="~{layouts/head :: head}">
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Thời khóa biểu Lớp học Online</title>
 </head>
 
 <body class="index-page">
@@ -15,257 +15,285 @@
 <main class="main" style="margin-top: 100px;">
 
     <section id="schedule" class="schedule section">
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Lịch trình họp</h2>
-        <p>Quản lý thời gian tham gia các phiên thảo luận của bạn một cách tối ưu nhất</p>
-    </div><div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Thời khóa biểu & Lịch học</h2>
+            <p>Quản lý thời gian, theo dõi các tiết học trực tuyến và sắp xếp lộ trình học tập tối ưu nhất</p>
+        </div>
 
-    <div class="schedule-header">
-        <ul class="nav nav-tabs" id="schedule-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="schedule-tab-1" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane-1" type="button" role="tab" aria-controls="schedule-tab-pane-1" aria-selected="true">Ngày 16 tháng 12<br>Thứ hai</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="schedule-tab-2" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane-2" type="button" role="tab" aria-controls="schedule-tab-pane-2" aria-selected="false">Ngày 17 tháng 12<br>Thứ ba</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="schedule-tab-3" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane-3" type="button" role="tab" aria-controls="schedule-tab-pane-3" aria-selected="false">Ngày 18 tháng 12<br>Thứ tư</button>
-            </li>
-        </ul>
-    </div>
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
 
+            <div class="schedule-header">
+                <ul class="nav nav-tabs" id="schedule-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="schedule-tab-1" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane-1" type="button" role="tab" aria-controls="schedule-tab-pane-1" aria-selected="true">Ngày 16 tháng 12<br>Thứ hai</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="schedule-tab-2" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane-2" type="button" role="tab" aria-controls="schedule-tab-pane-2" aria-selected="false">Ngày 17 tháng 12<br>Thứ ba</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="schedule-tab-3" data-bs-toggle="tab" data-bs-target="#schedule-tab-pane-3" type="button" role="tab" aria-controls="schedule-tab-pane-3" aria-selected="false">Ngày 18 tháng 12<br>Thứ tư</button>
+                    </li>
+                </ul>
+            </div>
 
-    <!--Lịch họp-->
-    <div class="tab-content" id="schedule-tabContent">
+            <!-- Khung nội dung các tiết học -->
+            <div class="tab-content" id="schedule-tabContent">
 
-        <div class="tab-pane fade show active" id="schedule-tab-pane-1" role="tabpanel" aria-labelledby="schedule-tab-1" tabindex="0">
-            <div class="schedule-content">
-                <div class="session-timeline">
+                <!-- NGÀY 1 -->
+                <div class="tab-pane fade show active" id="schedule-tab-pane-1" role="tabpanel" aria-labelledby="schedule-tab-1" tabindex="0">
+                    <div class="schedule-content">
+                        <div class="session-timeline">
 
-                    <div class="session-block">
-                        <div class="session-time">
-                            <span class="start">9:00</span>
-                            <span class="end">10:00</span>
-                        </div>
-                        <div class="session-card">
-                            <div class="session-info">
-                                <div class="session-meta">
-                                    <span class="track keynote">Diễn giả chính</span>
-                                    <span class="room">Sân khấu chính</span>
+                            <!-- Bài học 1 -->
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">9:00</span>
+                                    <span class="end">10:00</span>
                                 </div>
-                                <h3 class="session-title">Khai mạc: Tương lai của Công nghệ số</h3>
-                                <p class="session-description">Chào đón các đại biểu và cùng thảo luận về những xu hướng công nghệ đột phá sẽ định hình thị trường trong 5 năm tới. Tầm nhìn chiến lược và cơ hội mới.</p>
-                                <div class="speaker-info">
-                                    <img th:src="@{/assets/img/person/person-m-8.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                    <div class="speaker-details">
-                                        <h4 class="speaker-name">Nguyễn Văn An</h4>
-                                        <span class="speaker-role">CEO TechCorp</span>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track keynote">Khai giảng & Định hướng</span>
+                                            <span class="room">Lớp Livestream</span>
+                                        </div>
+                                        <h3 class="session-title">Khai mạc Khóa học: Tư duy Lập trình và Định hướng Nghề nghiệp</h3>
+                                        <p class="session-description">Chào đón các học viên mới, giới thiệu tổng quan lộ trình học, cam kết chuẩn đầu ra và phương pháp tự học công nghệ đột phá hiệu quả.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-m-8.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Thầy Nguyễn Văn An</h4>
+                                                <span class="speaker-role">Giảng viên cao cấp / cựu CEO TechCorp</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Bài học 2 -->
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">10:30</span>
+                                    <span class="end">11:15</span>
+                                </div>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track development">Lập trình Web</span>
+                                            <span class="room">Phòng chuyên đề A</span>
+                                        </div>
+                                        <h3 class="session-title">Ứng dụng Spring Boot & Thymeleaf nâng cao</h3>
+                                        <p class="session-description">Khám phá cấu trúc mô hình MVC, cách cấu hình liên kết layout và truyền tải dữ liệu động từ Controller ra giao diện webFront-end.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-m-9.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Cô Trần Thị Bình</h4>
+                                                <span class="speaker-role">Trưởng bộ phận Công nghệ phần mềm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Bài học 3 -->
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">10:30</span>
+                                    <span class="end">11:15</span>
+                                </div>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track design">Thiết kế UI/UX</span>
+                                            <span class="room">Phòng thực hành B</span>
+                                        </div>
+                                        <h3 class="session-title">Nguyên tắc Thiết kế Giao diện (UI/UX) cho Mobile Class App</h3>
+                                        <p class="session-description">Phân tích hành vi học tập trực tuyến của học sinh để xây dựng luồng giao diện tối ưu. Cách lựa chọn bảng màu và lưới bố cục chuẩn.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-m-6.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Thầy Lê Hoàng Cường</h4>
+                                                <span class="speaker-role">Chuyên gia Thiết kế Sản phẩm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Nghỉ giải lao giữa giờ -->
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">11:15</span>
+                                    <span class="end">11:45</span>
+                                </div>
+                                <div class="session-card break-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track break">Giải lao & Hỏi đáp</span>
+                                            <span class="room">Phòng thảo luận chung</span>
+                                        </div>
+                                        <h3 class="session-title">Giờ nghỉ giải lao & Thảo luận tự do (Q&A)</h3>
+                                        <p class="session-description">Thời gian nghỉ ngơi, uống nước. Học viên có thể ở lại phòng chat để trao đổi bài tập, giao lưu kết nối cùng các Mentor trợ giảng.</p>
                                     </div>
                                 </div>
                             </div>
-                            <button class="add-to-schedule">
-                                <i class="bi bi-calendar-plus"></i>
-                                Tham gia
-                            </button>
-                        </div>
-                    </div><div class="session-block">
-                    <div class="session-time">
-                        <span class="start">10:30</span>
-                        <span class="end">11:15</span>
-                    </div>
-                    <div class="session-card">
-                        <div class="session-info">
-                            <div class="session-meta">
-                                <span class="track development">Lập trình</span>
-                                <span class="room">Phòng A</span>
-                            </div>
-                            <h3 class="session-title">Ứng dụng AI trong phát triển phần mềm</h3>
-                            <p class="session-description">Khám phá cách tích hợp các mô hình ngôn ngữ lớn (LLM) vào quy trình làm việc để tối ưu hóa năng suất lập trình và giảm thiểu lỗi code.</p>
-                            <p>
-                            </p>
-                            <div class="speaker-info">
-                                <img th:src="@{/assets/img/person/person-m-9.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                <div class="speaker-details">
-                                    <h4 class="speaker-name">Trần Thị Bình</h4>
-                                    <span class="speaker-role">Trưởng nhóm Kỹ thuật</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="add-to-schedule">
-                            <i class="bi bi-calendar-plus"></i>
-                            Tham gia
-                        </button>
-                    </div>
-                </div><div class="session-block">
-                    <div class="session-time">
-                        <span class="start">10:30</span>
-                        <span class="end">11:15</span>
-                    </div>
-                    <div class="session-card">
-                        <div class="session-info">
-                            <div class="session-meta">
-                                <span class="track design">Thiết kế</span>
-                                <span class="room">Phòng B</span>
-                            </div>
-                            <h3 class="session-title">Tư duy thiết kế (Design Thinking) cho Mobile App</h3>
-                            <p class="session-description">Phân tích hành vi người dùng và xây dựng giao diện tối ưu trải nghiệm (UX/UI). Các nguyên tắc thiết kế hiện đại cần nắm vững.</p>
-                            <div class="speaker-info">
-                                <img th:src="@{/assets/img/person/person-m-6.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                <div class="speaker-details">
-                                    <h4 class="speaker-name">Lê Hoàng Cường</h4>
-                                    <span class="speaker-role">Product Designer</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="add-to-schedule">
-                            <i class="bi bi-calendar-plus"></i>
-                            Tham gia
-                        </button>
-                    </div>
-                </div><div class="session-block">
-                    <div class="session-time">
-                        <span class="start">11:15</span>
-                        <span class="end">11:45</span>
-                    </div>
-                    <div class="session-card break-card">
-                        <div class="session-info">
-                            <div class="session-meta">
-                                <span class="track break">Nghỉ giải lao</span>
-                                <span class="room">Sảnh chính</span>
-                            </div>
-                            <h3 class="session-title">Tiệc trà & Kết nối (Networking)</h3>
-                            <p class="session-description">Thưởng thức trà, cà phê và bánh ngọt. Đây là cơ hội tuyệt vời để giao lưu, trao đổi danh thiếp với các diễn giả và khách tham dự khác.</p>
-                        </div>
-                    </div>
-                </div><div class="session-block">
-                    <div class="session-time">
-                        <span class="start">12:00</span>
-                        <span class="end">12:45</span>
-                    </div>
-                    <div class="session-card">
-                        <div class="session-info">
-                            <div class="session-meta">
-                                <span class="track business">Kinh doanh</span>
-                                <span class="room">Sân khấu chính</span>
-                            </div>
-                            <h3 class="session-title">Chiến lược gọi vốn cho Startup</h3>
-                            <p class="session-description">Chia sẻ kinh nghiệm thực chiến từ các nhà đầu tư về cách xây dựng hồ sơ năng lực, định giá doanh nghiệp và thuyết phục quỹ đầu tư.</p>
-                            <div class="speaker-info">
-                                <img th:src="@{/assets/img/person/person-m-7.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                <div class="speaker-details">
-                                    <h4 class="speaker-name">Phạm Minh Đức</h4>
-                                    <span class="speaker-role">Nhà đầu tư thiên thần</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="add-to-schedule">
-                            <i class="bi bi-calendar-plus"></i>
-                            Tham gia
-                        </button>
-                    </div>
-                </div></div></div></div>
 
-        <div class="tab-pane fade" id="schedule-tab-pane-2" role="tabpanel" aria-labelledby="schedule-tab-2" tabindex="0">
-            <div class="schedule-content">
-                <div class="session-timeline">
-
-                    <div class="session-block">
-                        <div class="session-time">
-                            <span class="start">9:30</span>
-                            <span class="end">10:15</span>
-                        </div>
-                        <div class="session-card">
-                            <div class="session-info">
-                                <div class="session-meta">
-                                    <span class="track development">Lập trình</span>
-                                    <span class="room">Phòng A</span>
+                            <!-- Bài học 4 -->
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">12:00</span>
+                                    <span class="end">12:45</span>
                                 </div>
-                                <h3 class="session-title">Bảo mật đám mây và DevOps</h3>
-                                <p class="session-description">Xây dựng quy trình CI/CD an toàn và quản lý hạ tầng đám mây hiệu quả. Các lỗ hổng bảo mật thường gặp và cách phòng tránh.</p>
-                                <div class="speaker-info">
-                                    <img th:src="@{/assets/img/person/person-m-8.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                    <div class="speaker-details">
-                                        <h4 class="speaker-name">Đỗ Văn Em</h4>
-                                        <span class="speaker-role">Chuyên gia DevOps</span>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track business">Kỹ năng mềm</span>
+                                            <span class="room">Lớp Livestream</span>
+                                        </div>
+                                        <h3 class="session-title">Kỹ năng quản lý thời gian khi học Online</h3>
+                                        <p class="session-description">Chia sẻ phương pháp Pomodoro và cách lập kế hoạch học tập cá nhân giúp duy trì động lực, hoàn thành bài tập dự án đúng hạn.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-m-7.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Thầy Phạm Minh Đức</h4>
+                                                <span class="speaker-role">Cố vấn Tâm lý & Kỹ năng học đường</span>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
                                 </div>
                             </div>
-                            <button class="add-to-schedule">
-                                <i class="bi bi-calendar-plus"></i>
-                                Tham gia
-                            </button>
                         </div>
-                    </div><div class="session-block">
-                    <div class="session-time">
-                        <span class="start">10:45</span>
-                        <span class="end">11:30</span>
                     </div>
-                    <div class="session-card">
-                        <div class="session-info">
-                            <div class="session-meta">
-                                <span class="track design">Thiết kế</span>
-                                <span class="room">Phòng B</span>
-                            </div>
-                            <h3 class="session-title">Xu hướng đồ họa năm 2026</h3>
-                            <p class="session-description">Cập nhật những phong cách thiết kế mới nhất, từ 3D minimalism đến thiết kế tương tác thực tế ảo (AR/VR) trong marketing.</p>
-                            <div class="speaker-info">
-                                <img th:src="@{/assets/img/person/person-f-6.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                <div class="speaker-details">
-                                    <h4 class="speaker-name">Vũ Thu Phương</h4>
-                                    <span class="speaker-role">Giám đốc sáng tạo</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="add-to-schedule">
-                            <i class="bi bi-calendar-plus"></i>
-                            Tham gia
-                        </button>
-                    </div>
-                </div></div></div></div>
+                </div>
 
-        <div class="tab-pane fade" id="schedule-tab-pane-3" role="tabpanel" aria-labelledby="schedule-tab-3" tabindex="0">
-            <div class="schedule-content">
-                <div class="session-timeline">
+                <!-- NGÀY 2 -->
+                <div class="tab-pane fade" id="schedule-tab-pane-2" role="tabpanel" aria-labelledby="schedule-tab-2" tabindex="0">
+                    <div class="schedule-content">
+                        <div class="session-timeline">
 
-                    <div class="session-block">
-                        <div class="session-time">
-                            <span class="start">10:00</span>
-                            <span class="end">10:45</span>
-                        </div>
-                        <div class="session-card">
-                            <div class="session-info">
-                                <div class="session-meta">
-                                    <span class="track business">Kinh doanh</span>
-                                    <span class="room">Sân khấu chính</span>
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">9:30</span>
+                                    <span class="end">10:15</span>
                                 </div>
-                                <h3 class="session-title">Chuyển đổi số trong doanh nghiệp vừa và nhỏ</h3>
-                                <p class="session-description">Giải pháp công nghệ giúp tối ưu hóa vận hành, quản lý nhân sự và chăm sóc khách hàng tự động với chi phí thấp.</p>
-                                <div class="speaker-info">
-                                    <img th:src="@{/assets/img/person/person-m-9.webp}" alt="Speaker" class="speaker-avatar img-fluid">
-                                    <div class="speaker-details">
-                                        <h4 class="speaker-name">Ngô Quang Hải</h4>
-                                        <span class="speaker-role">Tư vấn chiến lược</span>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track development">Lập trình Web</span>
+                                            <span class="room">Phòng chuyên đề A</span>
+                                        </div>
+                                        <h3 class="session-title">Cấu trúc Cơ sở dữ liệu mã hóa mật khẩu đám mây</h3>
+                                        <p class="session-description">Tìm hiểu cơ chế hoạt động của Bcrypt, phân quyền người dùng (Spring Security) cho các ứng dụng giáo dục thông minh.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-m-8.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Thầy Đỗ Văn Em</h4>
+                                                <span class="speaker-role">Kỹ sư Hệ thống / Chuyên gia DevOps</span>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
                                 </div>
                             </div>
-                            <button class="add-to-schedule">
-                                <i class="bi bi-calendar-plus"></i>
-                                Tham gia
-                            </button>
-                        </div>
-                    </div></div></div></div>
-    </div></div>
 
-    <div class="schedule-actions">
-        <button class="btn btn-primary">
-            <i class="bi bi-download"></i>
-            Tải toàn bộ lịch trình
-        </button>
-        <button class="btn btn-outline">
-            <i class="bi bi-calendar-event"></i>
-            Xuất sang Lịch cá nhân
-        </button>
-    </div>
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">10:45</span>
+                                    <span class="end">11:30</span>
+                                </div>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track design">Thiết kế UI/UX</span>
+                                            <span class="room">Phòng thực hành B</span>
+                                        </div>
+                                        <h3 class="session-title">Xu hướng Thiết kế Đồ họa & Web tương tác 2026</h3>
+                                        <p class="session-description">Cập nhật phong cách thiết kế tối giản, ứng dụng chuyển động vi tương tác sinh động nhằm tăng khả năng tập trung của học viên.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-f-6.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Cô Vũ Thu Phương</h4>
+                                                <span class="speaker-role">Giám đốc Sáng tạo Học viện Mỹ thuật</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NGÀY 3 -->
+                <div class="tab-pane fade" id="schedule-tab-pane-3" role="tabpanel" aria-labelledby="schedule-tab-3" tabindex="0">
+                    <div class="schedule-content">
+                        <div class="session-timeline">
+
+                            <div class="session-block">
+                                <div class="session-time">
+                                    <span class="start">10:00</span>
+                                    <span class="end">10:45</span>
+                                </div>
+                                <div class="session-card">
+                                    <div class="session-info">
+                                        <div class="session-meta">
+                                            <span class="track business">Kiểm tra / Thi thử</span>
+                                            <span class="room">Lớp Livestream</span>
+                                        </div>
+                                        <h3 class="session-title">Luyện đề thi mẫu và Tổng kết cuối khóa</h3>
+                                        <p class="session-description">Giải đáp thắc mắc các bài tập lớn khó, công bố danh sách học viên xuất sắc nhận học bổng và hướng dẫn nộp đồ án tốt nghiệp.</p>
+                                        <div class="speaker-info">
+                                            <img th:src="@{/assets/img/person/person-m-9.webp}" alt="Teacher" class="speaker-avatar img-fluid">
+                                            <div class="speaker-details">
+                                                <h4 class="speaker-name">Thầy Ngô Quang Hải</h4>
+                                                <span class="speaker-role">Trưởng ban Khảo thí & Đảm bảo chất lượng</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-schedule">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        Vào lớp học
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thanh tác vụ cuối trang -->
+        <div class="schedule-actions">
+            <button class="btn btn-primary">
+                <i class="bi bi-download"></i>
+                Tải toàn bộ thời khóa biểu (.PDF)
+            </button>
+            <button class="btn btn-outline">
+                <i class="bi bi-calendar-event"></i>
+                Đồng bộ sang Google Calendar
+            </button>
+        </div>
 
     </section>
 </main>

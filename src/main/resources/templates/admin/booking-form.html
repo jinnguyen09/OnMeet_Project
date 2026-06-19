@@ -36,21 +36,21 @@
                               method="post">
 
                             <div class="mb-3">
-                                <label class="form-label">Chủ đề cuộc họp <span class="text-danger">*</span></label>
+                                <label class="form-label">Chủ đề lớp học <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" th:field="*{title}" required placeholder="Ex: Weekly Team Meeting">
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Phòng họp <span class="text-danger">*</span></label>
+                                    <label class="form-label">Phòng học <span class="text-danger">*</span></label>
                                     <select class="form-select" th:field="*{roomId}" required>
-                                        <option value="">-- Chọn phòng họp --</option>
+                                        <option value="">-- Chọn phòng học --</option>
                                         <option th:each="r : ${rooms}" th:value="${r.id}" th:text="${r.name + ' (Sức chứa: ' + r.capacity + ')'}"></option>
                                     </select>
                                 </div>
 
                                 <div class="col-md-6 mb-3 search-results-container">
-                                    <label class="form-label">Host (Người chủ trì) <span class="text-danger">*</span></label>
+                                    <label class="form-label">Giáo viên (Người chủ trì) <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="text" id="hostSearchInput" class="form-control" placeholder="Email hoặc SĐT...">
                                         <button class="btn btn-outline-secondary" type="button" onclick="searchUser('host')"><i class="bi bi-search"></i></button>

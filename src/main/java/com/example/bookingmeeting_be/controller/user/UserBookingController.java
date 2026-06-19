@@ -28,12 +28,12 @@ public class UserBookingController {
     private UserService userService;
 
     @PostMapping("/create")
-    public String createBooking(@RequestParam Integer roomId,
-                                @RequestParam String title,
-                                @RequestParam String bookingDate,
-                                @RequestParam String startTimeStr,
-                                @RequestParam String endTimeStr,
-                                @RequestParam(required = false) List<Integer> attendeeUserIds,
+    public String createBooking(@RequestParam("roomId") Integer roomId,
+                                @RequestParam("title") String title,
+                                @RequestParam("bookingDate") String bookingDate,
+                                @RequestParam("startTimeStr") String startTimeStr,
+                                @RequestParam("endTimeStr") String endTimeStr,
+                                @RequestParam(value = "attendeeUserIds", required = false) List<Integer> attendeeUserIds,
                                 Authentication auth,
                                 RedirectAttributes ra) {
         try {

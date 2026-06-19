@@ -1,6 +1,5 @@
 package com.example.bookingmeeting_be.model;
 
-import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +35,7 @@ public class UserPrincipal implements UserDetails {
         }
         return new UserPrincipal(
                 user.getUserId(),
-                user.getEmail(),
+                user.getEmail(), 
                 user.getPassword(),
                 authorities
         );

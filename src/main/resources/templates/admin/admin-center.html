@@ -3,7 +3,7 @@
 
 <head th:replace="~{layouts/admin-head :: admin-head}">
     <meta charset="UTF-8">
-    <title>OnMeet - Admin Home</title>
+    <title>Hệ thống Quản trị - Lớp học Online</title>
 </head>
 
 <body>
@@ -13,113 +13,118 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Trung tâm điều hành</h1>
+        <h1>Trung tâm điều hành giáo dục</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Tổng quan</li>
+                <li class="breadcrumb-item active">Tổng quan học vụ</li>
             </ol>
         </nav>
     </div>
 
     <section class="section dashboard">
-
         <div class="row">
 
+            <!-- Card 1: Lớp học Online -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card info-card sales-card">
                     <div class="card-body">
-                        <h5 class="card-title">Phòng họp <span>| Tổng số</span></h5>
+                        <h5 class="card-title">Lớp học Online <span>| Tổng số</span></h5>
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary">
-                                <i class="bi bi-door-open"></i>
+                                <i class="bi bi-mortarboard"></i>
                             </div>
                             <div class="ps-3">
                                 <h6 th:text="${totalRooms}">0</h6>
-                                <span class="text-muted small pt-2 ps-1">phòng</span>
+                                <span class="text-muted small pt-2 ps-1">lớp học</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Card 2: Kho học liệu/Tài liệu số -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card info-card revenue-card">
                     <div class="card-body">
-                        <h5 class="card-title">Thiết bị <span>| Trong kho</span></h5>
+                        <h5 class="card-title">Học liệu & Bài giảng <span>| Kho số</span></h5>
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success">
-                                <i class="bi bi-hdd-stack"></i>
+                                <i class="bi bi-journal-bookmark-fill"></i>
                             </div>
                             <div class="ps-3">
                                 <h6 th:text="${totalDevices}">0</h6>
-                                <span class="text-muted small pt-2 ps-1">thiết bị</span>
+                                <span class="text-muted small pt-2 ps-1">học liệu</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Card 3: Thành viên hệ thống -->
             <div class="col-xxl-3 col-md-6">
                 <div class="card info-card customers-card">
                     <div class="card-body">
-                        <h5 class="card-title">Người dùng <span>| Tổng số</span></h5>
+                        <h5 class="card-title">Học viên & Giảng viên <span>| Thành viên</span></h5>
                         <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning">
                                 <i class="bi bi-people"></i>
                             </div>
                             <div class="ps-3">
                                 <h6 th:text="${totalUsers}">0</h6>
-                                <span class="text-muted small pt-2 ps-1">người</span>
+                                <span class="text-muted small pt-2 ps-1">thành viên</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Card 4: Lịch học sắp tới -->
             <div class="col-xxl-3 col-md-6">
-                <div class="card info-card sales-card"> <div class="card-body">
-                    <h5 class="card-title">Lịch họp <span>| Sắp tới (Active)</span></h5>
-                    <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger">
-                            <i class="bi bi-calendar-event"></i>
-                        </div>
-                        <div class="ps-3">
-                            <h6 th:text="${activeBookings}">0</h6>
-                            <span class="text-muted small pt-2 ps-1">cuộc họp</span>
+                <div class="card info-card sales-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Lịch học sắp tới <span>| Đang mở (Active)</span></h5>
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6 th:text="${activeBookings}">0</h6>
+                                <span class="text-muted small pt-2 ps-1">buổi học</span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
 
         </div>
-        <div class="row">
 
+        <div class="row">
             <div class="col-lg-8">
                 <div class="row">
 
+                    <!-- Khối thao tác nhanh -->
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body pt-3">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
                                     <div>
-                                        <h5 class="card-title mb-0">Thao tác nhanh</h5>
-                                        <div class="text-muted small">Đi tắt sang các chức năng thường dùng.</div>
+                                        <h5 class="card-title mb-0">Thao tác quản trị nhanh</h5>
+                                        <div class="text-muted small">Đi tắt sang các chức năng cấu hình đào tạo thường dùng.</div>
                                     </div>
 
                                     <div class="d-flex flex-wrap gap-2">
                                         <a class="btn btn-primary" th:href="@{/admin/bookings/create}">
-                                            <i class="bi bi-plus-circle me-1"></i> Tạo lịch họp
+                                            <i class="bi bi-plus-circle me-1"></i> Xếp lịch học mới
                                         </a>
                                         <a class="btn btn-outline-secondary" th:href="@{/admin/bookings}">
-                                            <i class="bi bi-calendar-event me-1"></i> Quản lý lịch họp
+                                            <i class="bi bi-calendar2-week me-1"></i> Quản lý lịch học
                                         </a>
                                         <a class="btn btn-outline-secondary" th:href="@{/admin/devices}">
-                                            <i class="bi bi-hdd-stack me-1"></i> Thiết bị
+                                            <i class="bi bi-journal-text me-1"></i> Quản lý học liệu
                                         </a>
                                         <a class="btn btn-outline-secondary" th:href="@{/admin/meeting-rooms}">
-                                            <i class="bi bi-door-open me-1"></i> Phòng họp
+                                            <i class="bi bi-mortarboard me-1"></i> Danh sách lớp học
                                         </a>
                                     </div>
                                 </div>
@@ -127,12 +132,13 @@
                         </div>
                     </div>
 
+                    <!-- Khối việc cần xử lý (Duyệt lịch đăng ký học bổ trợ/chuyên đề) -->
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body pt-3">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <h5 class="card-title mb-0">Việc cần xử lý</h5>
-                                    <a class="small" th:href="@{/admin/bookings}">Xem tất cả</a>
+                                    <h5 class="card-title mb-0">Lịch học / Yêu cầu mở lớp chờ duyệt</h5>
+                                    <a class="small" th:href="@{/admin/bookings}">Xem toàn bộ</a>
                                 </div>
 
                                 <div class="list-group list-group-flush mt-2">
@@ -140,18 +146,18 @@
                                        th:href="@{/admin/bookings}"
                                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                                         <div class="me-3">
-                                            <div class="fw-semibold" th:text="${pb.title}">Tiêu đề cuộc họp</div>
+                                            <div class="fw-semibold" th:text="${pb.title}">Chủ đề buổi học</div>
                                             <div class="text-muted small">
-                                                <span th:text="${roomNames[pb.roomId]}">Phòng</span> •
-                                                <span th:text="${#temporals.format(pb.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(pb.endTime, 'HH:mm')}">00:00</span> •
-                                                Host: <span th:text="${hostNames[pb.hostUserId]}">Tên chủ trì</span>
+                                                Lớp: <span th:text="${roomNames[pb.roomId]}">Tên lớp</span> •
+                                                Thời gian: <span th:text="${#temporals.format(pb.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(pb.endTime, 'HH:mm')}">00:00</span> •
+                                                Giảng viên: <span th:text="${hostNames[pb.hostUserId]}">Tên giảng viên</span>
                                             </div>
                                         </div>
-                                        <span class="badge bg-warning text-dark rounded-pill">PENDING</span>
+                                        <span class="badge bg-warning text-dark rounded-pill">CHỜ DUYỆT</span>
                                     </a>
 
                                     <div th:if="${#lists.isEmpty(pendingBookings)}" class="text-center py-3 text-muted small">
-                                        <i class="bi bi-check-circle text-success me-1"></i> Không có lịch họp nào chờ duyệt.
+                                        <i class="bi bi-check-circle text-success me-1"></i> Không có yêu cầu xếp lịch lớp học nào đang chờ duyệt.
                                     </div>
                                 </div>
                             </div>
@@ -162,41 +168,41 @@
             </div>
 
             <div class="col-lg-4">
+                <!-- Khối Cảnh báo hệ thống phòng học Live -->
                 <div class="card">
                     <div class="card-body pt-3">
-                        <h5 class="card-title mb-2">Cảnh báo hệ thống</h5>
+                        <h5 class="card-title mb-2">Cảnh báo hệ thống đào tạo</h5>
                         <div class="alert alert-warning d-flex align-items-start gap-2" role="alert">
                             <i class="bi bi-exclamation-triangle"></i>
                             <div>
-                                <div class="fw-semibold">Phòng B203 đang bảo trì</div>
-                                <div class="small text-muted">Không thể đặt trong khung giờ 18:00 - 22:00.</div>
+                                <div class="fw-semibold">Phòng Live Jitsi-B203 nâng cấp</div>
+                                <div class="small text-muted">Tạm dừng kết nối phục vụ bảo trì luồng livestream trong khung giờ 18:00 - 22:00 hôm nay.</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Khối đi tắt sang các danh mục khác -->
                 <div class="card">
                     <div class="card-body pt-3">
-                        <h5 class="card-title mb-2">Đi tắt</h5>
+                        <h5 class="card-title mb-2">Lối tắt quản lý</h5>
                         <div class="d-grid gap-2">
                             <a class="btn btn-outline-primary" th:href="@{/admin/users}">
-                                <i class="bi bi-people me-1"></i> Danh sách người dùng
+                                <i class="bi bi-people me-1"></i> Quản lý tài khoản học viên
                             </a>
                             <a class="btn btn-outline-primary" th:href="@{/admin/devices/available}">
-                                <i class="bi bi-check2-circle me-1"></i> Thiết bị có sẵn
+                                <i class="bi bi-file-earmark-check me-1"></i> Giáo trình có sẵn
                             </a>
                             <a class="btn btn-outline-primary" th:href="@{/admin/bookings}">
-                                <i class="bi bi-calendar2-week me-1"></i> Danh sách lịch họp
+                                <i class="bi bi-calendar3 me-1"></i> Danh sách tất cả lịch học
                             </a>
                         </div>
                     </div>
                 </div>
 
             </div>
-
         </div>
     </section>
-
 </main>
 
 <div th:replace="~{layouts/admin-footer :: admin-footer}"></div>

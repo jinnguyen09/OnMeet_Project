@@ -34,7 +34,7 @@ public class MeetingRoomController {
     }
 
     @GetMapping("/rooms/{id}")
-    public String getRoomDetail(@PathVariable Integer id, Model model) {
+    public String getRoomDetail(@PathVariable("id") Integer id, Model model) {
         MeetingRoom room = meetingRoomService.getById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng với ID: " + id));
 

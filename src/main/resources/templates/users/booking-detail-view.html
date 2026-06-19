@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layouts/head :: head}">
-  <title>Chi tiết cuộc họp</title>
+  <title>Chi tiết buổi học trực tuyến</title>
 </head>
 <body class="index-page">
 <div th:replace="~{layouts/navbar :: navbar}"></div>
@@ -13,56 +13,61 @@
         <div class="col-lg-8">
           <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-              <h4 class="mb-0">CHI TIẾT CUỘC HỌP</h4>
+              <h4 class="mb-0"><i class="bi bi-mortarboard-fill me-2"></i>CHI TIẾT BUỔI HỌC TRỰC TUYẾN</h4>
             </div>
             <div class="card-body p-4">
-              <h2 class="fw-bold" th:text="${b.title}">Tiêu đề</h2>
-              <p class="text-muted" th:text="${b.description}">Mô tả</p>
+              <h2 class="fw-bold" th:text="${b.title}">Chủ đề bài học</h2>
+              <p class="text-muted" th:text="${b.description}">Nội dung tóm tắt buổi học hoặc ghi chú từ giảng viên.</p>
               <hr>
 
               <div class="mb-3">
-                <strong>Tên phòng: </strong>
-                <span th:text="${b.room != null ? b.room.name : 'Chưa gán phòng'}"></span>
+                <strong>Lớp học: </strong>
+                <span th:text="${b.room != null ? b.room.name : 'Chưa phân lớp'}"></span>
                 <br>
-                <strong>Địa điểm: </strong>
-                <span th:text="${b.room != null ? b.room.address : '---'}"></span>
+                <strong>Nền tảng / Hình thức: </strong>
+                <span th:text="${b.room != null ? b.room.address : 'Học trực tuyến qua Livestream'}"></span>
               </div>
-              <div class="session-detail">
-                <span class="fw-bold">Ngày tổ chức: </span>
-                <span th:text="${#temporals.format(b.startTime, 'dd/MM/yyyy')}">Ngày tổ chức</span>
+              <div class="session-detail mb-2">
+                <span class="fw-bold"><i class="bi bi-calendar3 me-1"></i> Ngày học: </span>
+                <span th:text="${#temporals.format(b.startTime, 'dd/MM/yyyy')}">Ngày học</span>
               </div>
-              <div class="session-detail">
-                <span class="fw-bold">Thời gian: </span>
-                <span th:text="${#temporals.format(b.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(b.endTime, 'HH:mm')}">Thời gian</span>
+              <div class="session-detail mb-2">
+                <span class="fw-bold"><i class="bi bi-clock me-1"></i> Thời gian: </span>
+                <span th:text="${#temporals.format(b.startTime, 'HH:mm')} + ' - ' + ${#temporals.format(b.endTime, 'HH:mm')}">Thời gian học</span>
               </div>
-              <div class="mb-3">
-                <strong>Người tổ chức: </strong>
-                <span th:text="${b.host != null ? b.host.fullname : 'Không rõ'}"></span>
+              <div class="mb-4">
+                <strong>Giảng viên phụ trách: </strong>
+                <span th:text="${b.host != null ? b.host.fullname : 'Giảng viên hệ thống'}"></span>
               </div>
 
-              <div id="meet-container" style="height: 500px; width: 100%; border-radius: 10px; overflow: hidden;" class="mb-4">
+              <!-- Khung bài giảng / Video lớp học trực tuyến trực tiếp -->
+              <h5 class="fw-bold text-primary mb-3"><i class="bi bi-camera-video me-2"></i>Phòng học trực tuyến (Live)</h5>
+              <div id="meet-container" style="height: 500px; width: 100%; border-radius: 10px; overflow: hidden; border: 2px solid #e3e6f0;" class="mb-4">
               </div>
 
             </div>
             <div class="card-footer text-center">
-              <a th:href="@{/users/history}" class="btn btn-secondary">Quay lại</a>
-              <button onclick="window.print()" class="btn btn-outline-dark">In trang này</button>
+              <a th:href="@{/users/history}" class="btn btn-secondary">Quay lại lịch sử</a>
+              <button onclick="window.print()" class="btn btn-outline-dark"><i class="bi bi-printer me-1"></i> In thông tin lớp học</button>
             </div>
           </div>
         </div>
       </div>
 
       <div th:unless="${b != null}" class="alert alert-warning text-center">
-        Không tìm thấy dữ liệu cuộc họp này.
+        Không tìm thấy dữ liệu hoặc thông tin của buổi học này.
       </div>
     </div>
   </section>
 </main>
 <div th:replace="~{layouts/footer :: footer}"></div>
+
+<!-- Sử dụng thư viện Jitsi Meet phục vụ việc gọi Video trực tuyến cho lớp học -->
 <script src="https://meet.jit.si/external_api.js"></script>
 <script th:inline="javascript">
   window.onload = () => {
-    const roomName = "OnMeet_Room_" + [[${b.id}]];
+    // Đổi tiền tố tên phòng thành OnlineClass để đồng bộ với website lớp học
+    const roomName = "OnlineClass_Room_" + [[${b.id}]];
     const domain = "meet.jit.si";
     const options = {
       roomName: roomName,
@@ -71,6 +76,9 @@
       parentNode: document.querySelector('#meet-container'),
       userInfo: {
         displayName: [[${#authentication.principal.username}]]
+      },
+      interfaceConfigOverwrite: {
+        // Có thể cấu hình thêm ẩn hiện các nút trong lớp học ở đây nếu cần
       }
     };
     const api = new JitsiMeetExternalAPI(domain, options);

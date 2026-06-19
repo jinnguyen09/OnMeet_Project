@@ -23,13 +23,17 @@ public class UserViewAuthController {
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
     private static final String ACCESS_TOKEN_COOKIE = "ACCESS_TOKEN";
+
     @GetMapping("/login")
-    public String login()
-    {
+    public String login() {
         return "auth/login";
     }
+
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpServletResponse response, Model model) {
+    public String login(@RequestParam("username") String username, 
+                        @RequestParam("password") String password, 
+                        HttpServletResponse response, 
+                        Model model) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             String jwt = jwtService.generateToken(username);
@@ -57,16 +61,18 @@ public class UserViewAuthController {
     public Object me(Authentication authentication) {
         return authentication;
     }
+
     @GetMapping("/register")
-    public String register()
-    {
+    public String register() {
         return "auth/register";
     }
+
+    // ĐÃ SỬA: Thêm tên định danh cụ thể vào tất cả các @RequestParam
     @PostMapping("/register")
-    public String register(@RequestParam String email,
-                           @RequestParam String password,
-                           @RequestParam String confirmPassword,
-                           @RequestParam(required = false) String fullname,
+    public String register(@RequestParam("email") String email,
+                           @RequestParam("password") String password,
+                           @RequestParam("confirmPassword") String confirmPassword,
+                           @RequestParam(value = "fullname", required = false) String fullname,
                            HttpServletResponse response,
                            Model model) {
         try {
@@ -123,8 +129,4 @@ public class UserViewAuthController {
             return "auth/register";
         }
     }
-
-
 }
-
-

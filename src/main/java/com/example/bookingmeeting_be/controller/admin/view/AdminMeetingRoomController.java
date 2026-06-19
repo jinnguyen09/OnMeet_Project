@@ -156,7 +156,7 @@ public class AdminMeetingRoomController {
     }
 
     @GetMapping("/{id}")
-    public String getMeetingRoomDetail(@PathVariable Integer id, Model model) {
+    public String getMeetingRoomDetail(@PathVariable("id") Integer id, Model model) {
         MeetingRoom room = meetingRoomService.getById(id).orElse(null);
         if (room == null) return "redirect:/admin/meeting-rooms";
 
@@ -165,7 +165,7 @@ public class AdminMeetingRoomController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("meetingRoomForm", meetingRoomService.buildFormForEdit(id));
         model.addAttribute("devices", deviceService.getAll());
         return "admin/admin-meeting-room-form";
@@ -173,7 +173,7 @@ public class AdminMeetingRoomController {
 
     @PostMapping("/{id}")
     public String updateMeetingRoom(
-            @PathVariable Integer id,
+            @PathVariable("id") Integer id,
             @ModelAttribute("meetingRoomForm") MeetingRoomForm form,
             RedirectAttributes redirectAttributes
     ) throws java.io.IOException {
@@ -211,7 +211,7 @@ public class AdminMeetingRoomController {
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteMeetingRoom(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public String deleteMeetingRoom(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         meetingRoomService.getById(id).ifPresent(room -> {
             meetingRoomService.deletePhysicalFile(room.getImageUrl());
         });

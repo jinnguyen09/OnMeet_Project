@@ -18,7 +18,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/admin/meeting-rooms">Phòng Họp</a></li>
+                <li class="breadcrumb-item"><a href="/admin/meeting-rooms">Phòng Học</a></li>
                 <li class="breadcrumb-item active" th:text="${meetingRoomForm.id != null ? 'Chỉnh Sửa' : 'Tạo Mới'}"></li>
             </ol>
         </nav>
@@ -30,7 +30,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Thông Tin Phòng Họp</h5>
+                        <h5 class="card-title">Thông Tin Phòng Học</h5>
 
                         <form th:object="${meetingRoomForm}"
                               th:action="${meetingRoomForm.id != null ? '/admin/meeting-rooms/' + meetingRoomForm.id : '/admin/meeting-rooms/create'}"
@@ -39,7 +39,7 @@
                             <input type="hidden" th:field="*{id}"/>
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Tên Phòng Họp <span class="text-danger">*</span></label>
+                                <label for="name" class="form-label">Tên Phòng Học <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
                             </div>
 
@@ -85,7 +85,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="imageFile" class="form-label">Hình ảnh phòng họp</label>
+                                <label for="imageFile" class="form-label">Hình ảnh phòng học</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-camera"></i></span>
                                     <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">

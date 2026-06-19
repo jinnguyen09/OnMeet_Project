@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý phòng họp</title>
+    <title>Quản lý lớp học Online</title>
     <div th:replace="~{layouts/admin-head :: admin-head}"></div>
     <style>
         .modal-header { background-color: #f8f9fa; border-bottom: 2px solid #dee2e6; }
@@ -18,11 +18,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Quản lý phòng họp</h1>
+        <h1>Quản lý lớp học Online</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Phòng họp</li>
+                <li class="breadcrumb-item active">Lớp học trực tuyến</li>
             </ol>
         </nav>
     </div>
@@ -34,9 +34,9 @@
                     <div class="card-body">
 
                         <div class="d-flex justify-content-between align-items-center mb-4 mt-2">
-                            <h5 class="card-title mb-0">Danh sách phòng họp</h5>
+                            <h5 class="card-title mb-0">Danh sách lớp học trực tuyến</h5>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#roomModal" onclick="openRoomModal('add')">
-                                <i class="bi bi-plus-circle"></i> Thêm phòng họp
+                                <i class="bi bi-plus-circle"></i> Tạo lớp học mới
                             </button>
                         </div>
 
@@ -45,7 +45,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-search"></i></span>
                                     <label>
-                                        <input type="text" class="form-control" placeholder="Tìm theo địa chỉ, số phòng...">
+                                        <input type="text" class="form-control" placeholder="Tìm theo tên lớp, khóa học, nền tảng...">
                                     </label>
                                     <button class="btn btn-secondary">Tìm kiếm</button>
                                 </div>
@@ -57,10 +57,10 @@
                                 <thead class="table-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Tầng</th>
-                                    <th>Số phòng</th>
-                                    <th>Trang thiết bị</th>
+                                    <th>Hình thức / Nền tảng</th>
+                                    <th>Khóa học / Danh mục</th>
+                                    <th>Tên lớp / Mã lớp</th>
+                                    <th>Tài liệu & Giáo trình đi kèm</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
                                 </tr>
@@ -68,11 +68,11 @@
                                 <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>123 Nguyễn Văn Linh</td>
-                                    <td>3</td>
-                                    <td>P301</td>
-                                    <td>Máy chiếu, Điều hòa, Wifi</td>
-                                    <td><span class="badge bg-success">Đang trống</span></td>
+                                    <td>Học trực tuyến (Jitsi Meet)</td>
+                                    <td>Lập trình Web</td>
+                                    <td>Java-SpringBoot-01</td>
+                                    <td>Slide bài giảng, Source Code mẫu, Ebook</td>
+                                    <td><span class="badge bg-success">Đang mở</span></td>
                                     <td>
                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#roomModal" onclick="openRoomModal('edit', this)">
                                             <i class="bi bi-pencil"></i> Sửa
@@ -93,11 +93,12 @@
     </section>
 </main>
 
+<!-- Modal Thêm/Sửa lớp học -->
 <div class="modal fade" id="roomModal" tabindex="-1" aria-labelledby="roomModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="roomModalLabel">Thông tin phòng họp</h5>
+                <h5 class="modal-title" id="roomModalLabel">Thông tin cấu hình lớp học</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="roomForm">
@@ -106,39 +107,44 @@
                         <input type="hidden" id="roomId">
 
                         <div class="col-md-12">
-                            <label class="form-label">Địa chỉ</label>
-                            <label for="roomAddress"></label><input type="text" class="form-control" id="roomAddress" placeholder="VD: 123 Nguyễn Văn Linh" required>
+                            <label class="form-label">Hình thức học / Địa chỉ liên kết nền tảng</label>
+                            <label for="roomAddress"></label>
+                            <input type="text" class="form-control" id="roomAddress" placeholder="VD: Học trực tuyến (Zoom) hoặc (Jitsi Meet)" required>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Tầng</label>
-                            <label for="roomFloor"></label><input type="number" class="form-control" id="roomFloor" required>
+                            <label class="form-label">Khóa học / Chuyên ngành</label>
+                            <label for="roomFloor"></label>
+                            <input type="text" class="form-control" id="roomFloor" placeholder="VD: Lập trình Web, Thiết kế" required>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Số phòng</label>
-                            <label for="roomNumber"></label><input type="text" class="form-control" id="roomNumber" placeholder="VD: P301" required>
+                            <label class="form-label">Tên lớp / Mã lớp</label>
+                            <label for="roomNumber"></label>
+                            <input type="text" class="form-control" id="roomNumber" placeholder="VD: Java-01, UIUX-Vip" required>
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label">Trạng thái</label>
-                            <label for="roomStatus"></label><select class="form-select" id="roomStatus" required>
-                                <option value="Đang trống">Đang trống</option>
-                                <option value="Đang thuê">Đang thuê</option>
-                                <option value="Bảo trì">Bảo trì</option>
+                            <label class="form-label">Trạng thái lớp</label>
+                            <label for="roomStatus"></label>
+                            <select class="form-select" id="roomStatus" required>
+                                <option value="Đang mở">Đang mở (Active)</option>
+                                <option value="Tạm dừng">Tạm dừng (Pending)</option>
+                                <option value="Kết thúc">Kết thúc (Closed)</option>
                             </select>
                         </div>
 
                         <div class="col-md-12">
-                            <label class="form-label">Trang thiết bị</label>
-                            <label for="roomEquipment"></label><textarea class="form-control" id="roomEquipment" rows="2" placeholder="Máy chiếu, Điều hòa, Loa..."></textarea>
-                            <small class="text-muted">Các thiết bị cách nhau bằng dấu phẩy</small>
+                            <label class="form-label">Tài liệu & Học liệu đi kèm lớp học</label>
+                            <label for="roomEquipment"></label>
+                            <textarea class="form-control" id="roomEquipment" rows="2" placeholder="Slide bài giảng, Giáo trình PDF, Source code mẫu..."></textarea>
+                            <small class="text-muted">Các danh mục tài liệu phân tách nhau bằng dấu phẩy</small>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+                    <button type="submit" class="btn btn-primary">Lưu thông tin lớp</button>
                 </div>
             </form>
         </div>
@@ -153,13 +159,12 @@
         const form = document.getElementById('roomForm');
 
         if (mode === 'add') {
-            title.innerHTML = '<i class="bi bi-plus-circle"></i> Thêm phòng họp mới';
+            title.innerHTML = '<i class="bi bi-plus-circle"></i> Thêm lớp học trực tuyến mới';
             form.reset();
             document.getElementById('roomId').value = "";
         } else {
-            title.innerHTML = '<i class="bi bi-pencil-square"></i> Chỉnh sửa phòng họp';
+            title.innerHTML = '<i class="bi bi-pencil-square"></i> Cập nhật cấu hình lớp học';
 
-            // Lấy dữ liệu từ dòng hiện tại
             const row = button.closest('tr');
             const cells = row.cells;
 
@@ -177,14 +182,14 @@
     document.getElementById('roomForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const id = document.getElementById('roomId').value;
-        const msg = id ? "Cập nhật phòng họp thành công!" : "Thêm phòng họp mới thành công!";
+        const msg = id ? "Cập nhật thông tin lớp học thành công!" : "Tạo lớp học trực tuyến mới thành công!";
         alert(msg);
         bootstrap.Modal.getInstance(document.getElementById('roomModal')).hide();
     });
 
     function deleteRoom(id) {
-        if(confirm("Bạn có chắc muốn xóa phòng họp này?")) {
-            alert("Đã xóa phòng có ID: " + id);
+        if(confirm("Bạn có chắc chắn muốn xóa lớp học trực tuyến này không?")) {
+            alert("Đã xóa lớp học thành công có ID: " + id);
         }
     }
 </script>

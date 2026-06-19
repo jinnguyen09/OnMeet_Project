@@ -34,14 +34,14 @@ public class DeviceViewController {
 
 
     @GetMapping("/edit/{id}")
-    public String editDeviceForm(@PathVariable int id, Model model) {
+    public String editDeviceForm(@PathVariable("id") int id, Model model) {
         Device device = deviceService.getById(id);
         model.addAttribute("device", device);
         return "device-edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateDevice(@PathVariable int id, @ModelAttribute Device device,
+    public String updateDevice(@PathVariable("id") int id, @ModelAttribute Device device,
                                RedirectAttributes redirectAttributes) {
         deviceService.update(id, device);
         redirectAttributes.addFlashAttribute("success", "Cập nhật thiết bị thành công!");
@@ -49,7 +49,7 @@ public class DeviceViewController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteDevice(@PathVariable int id, RedirectAttributes redirectAttributes) {
+    public String deleteDevice(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         deviceService.delete(id);
         redirectAttributes.addFlashAttribute("success", "Xóa thiết bị thành công!");
         return "redirect:/admin/devices";

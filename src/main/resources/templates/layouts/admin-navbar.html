@@ -4,7 +4,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a th:href="@{/admin}" class="logo d-flex align-items-center">
                 <img th:src="@{/admin/assets/img/logo.png}" alt="">
-                <span class="d-none d-lg-block">OnMeet</span>
+                <span class="d-none d-lg-block">SmartMeeting</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
@@ -35,7 +35,7 @@
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                         <li class="dropdown-header">
-                            Bạn có <span th:text="${pendingCount != null ? pendingCount : 0}">0</span> thông báo mới
+                            Bạn có <span th:text="${pendingCount != null ? pendingCount : 0}">0</span> Thông báo mới
                             <a th:href="@{/admin/bookings}"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
                         </li>
 
@@ -135,13 +135,11 @@
                         </li>
                         <li><hr class="dropdown-divider"></li>
 
-                        <li >
-                            <form th:action="@{/admin/logout}" method="post" class="m-0">
-                                <button class="dropdown-item d-flex align-items-center" type="submit">
-                                    <i class="bi bi-box-arrow-right"></i>
-                                    <span>Đăng xuất</span>
-                                </button>
-                            </form>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" th:href="@{/users/home}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Đăng xuất</span>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -194,12 +192,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="javascript:void(0)">
-                    <i class="bi bi-journal-text"></i><span>Quản lý phòng họp</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-journal-text"></i><span>Quản lý phòng học</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a th:href="@{/admin/meeting-rooms}">
-                            <i class="bi bi-circle"></i><span>Danh sách phòng họp</span>
+                            <i class="bi bi-circle"></i><span>Danh sách phòng học</span>
                         </a>
                     </li>
                 </ul>
@@ -207,7 +205,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" th:href="@{/admin/bookings}">
                     <i class="bi bi-calendar-event"></i>
-                    <span>Quản lý lịch họp</span>
+                    <span>Quản lý lịch học</span>
                 </a>
             </li>
 

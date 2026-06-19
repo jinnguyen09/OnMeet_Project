@@ -30,11 +30,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Quản lý Phòng Họp</h1>
+        <h1>Quản lý Phòng Học</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Quản lý Phòng Họp</li>
+                <li class="breadcrumb-item active">Quản lý Phòng Học</li>
             </ol>
         </nav>
     </div>
@@ -86,9 +86,9 @@
                     <div class="card-body">
 
                         <div class="d-flex justify-content-between align-items-center mb-4 mt-2">
-                            <h5 class="card-title mb-0">Danh sách Phòng Họp</h5>
+                            <h5 class="card-title mb-0">Danh sách Phòng Học</h5>
                             <a href="/admin/meeting-rooms/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Thêm Phòng Họp
+                                <i class="bi bi-plus-circle"></i> Thêm Phòng Học
                             </a>
                         </div>
 
@@ -176,7 +176,7 @@
                                 <tr th:if="${#lists.isEmpty(meetingRooms)}">
                                     <td colspan="8" class="text-center text-muted py-5">
                                         <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                                        Không tìm thấy phòng họp nào phù hợp.
+                                        Không tìm thấy phòng học nào phù hợp.
                                     </td>
                                 </tr>
                                 </tbody>
