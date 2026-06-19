@@ -40,11 +40,11 @@ public class BookingService {
         boolean isConflict = bookingRepository.existsOverlappingBooking(
                 request.getRoomId(), request.getStartTime(), request.getEndTime());
         if (isConflict) {
-            throw new RuntimeException("Phòng họp đã có người đặt trong khoảng thời gian này!");
+            throw new RuntimeException("Phòng học đã có người đăng ký trong khoảng thời gian này!");
         }
 
         MeetingRoom room = meetingRoomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng họp!"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng học!"));
 
         int guestCount = (request.getAttendeeUserIds() == null) ? 0 : request.getAttendeeUserIds().size();
         boolean hostCounts = (request.getIsHostParticipating() == null) || request.getIsHostParticipating();
@@ -74,6 +74,22 @@ public class BookingService {
         processDevices(savedBooking, request.getDevices());
 
         syncAttendeesAndNotify(savedBooking, request.getAttendeeUserIds(), false);
+        Notification noti = new Notification();
+        noti.setBookingId(savedBooking.getId());
+        noti.setType("CLASS_BOOKING_CREATED");
+        noti.setContent("Bạn đã đăng ký lịch học thành công: " + savedBooking.getTitle() + ". Chờ quản trị viên duyệt.");
+        noti.setCreatedAt(LocalDateTime.now());
+        notificationRepository.save(noti);
+
+        NotificationRecipient nr = new NotificationRecipient();
+        nr.setId(new NotificationRecipientId(noti.getNotificationId(), savedBooking.getHostUserId()));
+        nr.setNotification(noti);
+        nr.setUser(userRepository.getReferenceById(savedBooking.getHostUserId()));
+        nr.setIsRead(false);
+        notificationRecipientRepository.save(nr);
+
+        processDevices(savedBooking, request.getDevices());
+        syncAttendeesAndNotify(savedBooking, request.getAttendeeUserIds(), false);
 
         return savedBooking;
     }
@@ -81,10 +97,10 @@ public class BookingService {
     @Transactional
     public Booking updateBooking(Integer bookingId, BookingRequest request) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy lịch họp!"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy lịch học!"));
 
         if ("CANCELLED".equals(booking.getStatus())) {
-            throw new RuntimeException("Không thể sửa lịch họp đã bị hủy!");
+            throw new RuntimeException("Không thể sửa lịch học đã bị hủy!");
         }
 
         validateBookingTime(request.getStartTime(), request.getEndTime());
@@ -92,13 +108,13 @@ public class BookingService {
         boolean conflict = bookingRepository.existsOverlappingBookingForUpdate(
                 bookingId, request.getRoomId(), request.getStartTime(), request.getEndTime());
         if (conflict) {
-            throw new RuntimeException("Thời gian mới bị trùng với lịch họp khác!");
+            throw new RuntimeException("Thời gian mới bị trùng với lịch học khác!");
         }
 
         returnDevicesToStock(bookingId);
 
         MeetingRoom room = meetingRoomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng họp!"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy phòng học!"));
         booking.setTitle(request.getTitle());
         booking.setRoomId(request.getRoomId());
         booking.setStartTime(request.getStartTime());
@@ -122,7 +138,7 @@ public class BookingService {
     @Transactional
     public void cancelBooking(Integer bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy lịch họp!"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy lịch học!"));
 
         if ("CANCELLED".equals(booking.getStatus())) return;
 
@@ -196,8 +212,8 @@ public class BookingService {
 
         Notification noti = new Notification();
         noti.setBookingId(booking.getId());
-        noti.setType(isUpdate ? "BOOKING_UPDATED" : "INVITE");
-        noti.setContent((isUpdate ? "Cập nhật: " : "Lời mời họp: ") + booking.getTitle());
+        noti.setType(isUpdate ? "CLASS_BOOKING_UPDATED" : "CLASS_INVITE");
+        noti.setContent((isUpdate ? "Cập nhật lịch học: " : "Lời mời họp lớp/môn học: ") + booking.getTitle());
         noti.setCreatedAt(LocalDateTime.now());
         Notification savedNoti = notificationRepository.save(noti);
 
@@ -216,7 +232,7 @@ public class BookingService {
     @Transactional
     public void updateStatus(Integer id, String status) {
         Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy lịch họp với ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy lịch học với ID: " + id));
         booking.setStatus(status);
         bookingRepository.save(booking);
     }

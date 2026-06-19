@@ -47,14 +47,14 @@ public class NotificationController {
 
 
     @PostMapping("/{notiId}/read")
-    public String markRead(@PathVariable("id") Integer notiId, Authentication auth) {
+    public String markRead(@PathVariable("notiId") Integer notiId, Authentication auth) {
         Integer userId = currentUserId(auth);
         notificationService.markRead(userId, notiId);
         return "redirect:/users/notifications";
     }
 
     @PostMapping("/{notiId}/accept")
-    public String accept(@PathVariable("id") Integer notiId, Authentication auth, RedirectAttributes ra) {
+    public String accept(@PathVariable("notiId") Integer notiId, Authentication auth, RedirectAttributes ra) {
         Integer userId = currentUserId(auth);
         try {
             notificationService.acceptInvite(userId, notiId);
@@ -66,7 +66,7 @@ public class NotificationController {
     }
 
     @PostMapping("/{notiId}/decline")
-    public String decline(@PathVariable("id") Integer notiId, Authentication auth, RedirectAttributes ra) {
+    public String decline(@PathVariable("notiId") Integer notiId, Authentication auth, RedirectAttributes ra) {
         Integer userId = currentUserId(auth);
         try {
             notificationService.declineInvite(userId, notiId);
